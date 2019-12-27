@@ -1,6 +1,16 @@
+@import 'normilize';
+@import 'statusbar';
+
 $seatFree: yellowgreen;
 $seatSold: #d2d2d2;
-$seatBlocked: pink;
+$seatBooked: pink;
+$seatTextColor: white;
+$seatsBG: #F7F7F7;
+$curvesColor: #AA9055;
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
 .seat {
     cursor: pointer;
@@ -13,9 +23,9 @@ $seatBlocked: pink;
         }
     }
 
-    &[data-status='blocked'] {
+    &[data-status='booked'] {
         .seat_cycle {
-            fill: $seatBlocked;
+            fill: $seatBooked;
         }
     }
 
@@ -23,7 +33,7 @@ $seatBlocked: pink;
         font-size: 12px;
         font-weight: normal;
         font-family: Arial;
-        fill: #FFFFFF;
+        fill: $seatTextColor;
     }
 
     .seat_cycle {
@@ -34,12 +44,12 @@ $seatBlocked: pink;
 
 
 .seats_bg {
-    fill: #F7F7F7;
+    fill: $seatsBG;
     fill-rule: nonzero;
 }
 
 .curves {
-    fill: #AA9055;
+    fill: $curvesColor;
     fill-rule: nonzero;
 }
 
@@ -50,15 +60,16 @@ $seatBlocked: pink;
 
     .title_seat_row {
         font-size: 16px;
-        fill: #AA9055;
+        fill: $curvesColor;
     }
 
     .title_lodge {
         font-size: 16px;
+        fill: $curvesColor;
     }
 
     .title_area {
-        fill: #AA9055;
+        fill: $curvesColor;
         font-size: 30px;
     }
 }

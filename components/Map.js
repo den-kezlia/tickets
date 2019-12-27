@@ -5083,7 +5083,7 @@ export default class Map extends Component {
                                 <tspan x="703" y="1167">БАЛКОН</tspan>
                             </text>
                             <text className="title_area" id="title_lodges_mezzanine">
-                                <tspan x="623" y="887">ЛОЖИ БЕЛЬЭТАЖА</tspan>
+                                <tspan x="623" y="1023">ЛОЖИ БЕЛЬЭТАЖА</tspan>
                             </text>
                             <text className="title_area" id="title_lodges_benoir">
                                 <tspan x="644" y="743">ЛОЖИ БЕНУАРА</tspan>

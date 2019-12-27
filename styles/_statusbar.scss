@@ -1,0 +1,31 @@
+.statusbar {
+    position: fixed;
+    width: 100vw;
+    padding: 20px;
+    bottom: 0;
+    background: #cccccc;
+    border-top: 1px solid;
+
+    .statusbar-inner {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.tickets-count {
+    display: flex;
+    justify-content: space-between;
+}
+
+.booked-list {
+    margin: 0;
+    padding: 0;
+
+    .booked-seat {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        margin: 10px 0;
+        list-style: none;
+    }
+}
