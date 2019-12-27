@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PhoneInput from 'react-phone-input-2'
 
 export default class BookingForm extends Component {
     render() {
@@ -15,13 +16,16 @@ export default class BookingForm extends Component {
                     <div className="booking-form">
                          <form onSubmit={this.props.handleBooking()}>
                             <div className="form-group">
-                                <input className="input" type="text" placeholder="Имя, Фамилия" required />
+                                <label htmlFor="name">Имя</label>
+                                <input id="name" name="name" className="input" type="text" placeholder="Имя" required />
                             </div>
                             <div className="form-group">
-                                <input className="input" type="email" placeholder="Email" required />
+                                <label htmlFor="email">Email</label>
+                                <input id="email" name="email" type="email" placeholder="Email" required />
                             </div>
                             <div className="form-group">
-                                <input className="input" type="text" placeholder="Номер Телефона" required />
+                                <label htmlFor="phone">Телефон</label>
+                                <PhoneInput id="phone" name="phone" country={'ua'} />
                             </div>
                             <div className="form-group">
                                 <button className="btn btn-primary" type="submit">Забронировать</button>
