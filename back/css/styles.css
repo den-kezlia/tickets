@@ -1,0 +1,76 @@
+.st0 {
+    fill: #F7F7F7;
+}
+
+.st1 {
+    fill: #D2D2D2;
+}
+
+.st2 {
+    fill: #AA9055;
+}
+
+.st3 {
+    opacity: 0.7;
+    fill: #AA9055;
+}
+
+.st4 {
+    fill: #FFFFFF;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    display: flex;
+}
+
+.theater {
+    width: 100%;
+    height: calc(100% - 80px);
+    overflow: auto;
+}
+
+svg {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.st1:hover {
+    fill: red;
+    cursor: pointer;
+}
+
+.st1.active {
+    fill: green;
+}
+
+footer {
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    height: 80px;
+    background: #cccccc;
+    border-top: 1px solid;
+}
+
+.footer-inner {
+    display: flex;
+}
+
+.info {
+    width: 50%;
+}
+
+.button-wrapper {
+    width: 50%;
+}
+
+.price:after {
+    content: ' UAH';
+}

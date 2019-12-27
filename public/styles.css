@@ -1,0 +1,42 @@
+li {
+  margin: 10px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seat {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #222;
+  border-radius: 50%;
+  text-align: center;
+  text-decoration: none;
+}
+
+.seat.free {
+  cursor: pointer;
+}
+
+.seat.blocked {
+  background: #ccc;
+}
+
+.seat.sold {
+  background: pink;
+}
+
+.panel {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: pink;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.panel-inner {
+  display: flex;
+  justify-content: space-between;
+}

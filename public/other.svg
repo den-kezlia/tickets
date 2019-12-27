@@ -1,0 +1,205 @@
+<g id="other">
+    <g id="curves" className="curves" transform="translate(19.000000, 0.000000)">
+        <path d="M1118.5,3 C1125,3 1126.9,11.8 1121,14.5 C1095,26.5 1049.5,46.2 993.7,64.7 C920.9,88.9 830.5,110.7 742.9,110.7 C655.3,110.7 564.9,88.9 492.1,64.7 C436.3,46.2 390.8,26.5 364.8,14.4 C358.9,11.7 360.9,2.9 367.3,2.9 L1118.5,2.9 L1118.5,3 Z"></path>
+        <path d="M515.1,71.8 C509,69.9 504.6,77.5 509.1,81.9 C569.8,140.1 652.2,175.9 743,175.9 C833.8,175.9 916.2,140.1 976.9,81.9 C981.5,77.5 977,69.9 970.9,71.8 C902.5,92.9 821.6,110.6 743,110.6 C664.4,110.6 583.5,92.9 515.1,71.8 Z" opacity="0.7"></path>
+        <path d="M304.4,116 L273,116 C271.6,116 270.5,114.9 270.5,113.5 C270.5,112.1 271.6,111 273,111 L302.6,111 L338.7,2.2 C339.1,0.9 340.5,0.2 341.9,0.6 C343.3,1 343.9,2.4 343.5,3.8 L306.9,114.3 C306.4,115.3 305.4,116 304.4,116 Z"></path>
+        <path d="M1215,116 L1182.8,116 C1181.7,116 1180.8,115.3 1180.4,114.3 L1142.6,3.8 C1142.2,2.5 1142.8,1.1 1144.2,0.6 C1145.5,0.2 1146.9,0.8 1147.4,2.2 L1184.7,111 L1215.1,111 C1216.5,111 1217.6,112.1 1217.6,113.5 C1217.6,114.9 1216.4,116 1215,116 Z"></path>
+        <path d="M743,1105.3 C743,1105.3 743,1105.3 743,1105.3 C631.2,1104.7 526.7,1083.9 432.3,1043.7 C347.7,1007.7 272.5,956.6 208.6,892 C151.6,834.4 104.4,765.9 72,693.9 C41.6,626.4 24.6,556.8 22.6,492.8 C22.6,491.4 23.6,490.3 25,490.2 C26.4,490.2 27.5,491.2 27.6,492.6 C31.7,627.8 100.6,775.8 212.1,888.5 C306.8,984.3 475.8,1098.8 743,1100.3 C744.4,1100.3 745.5,1101.4 745.5,1102.8 C745.5,1104.2 744.4,1105.3 743,1105.3 Z"></path>
+        <path d="M743,1105.3 C741.6,1105.3 740.5,1104.2 740.5,1102.8 C740.5,1101.4 741.6,1100.3 743,1100.3 C1010.1,1098.8 1179.1,984.3 1273.9,888.5 C1385.4,775.8 1454.4,627.8 1458.4,492.6 C1458.4,491.2 1459.6,490.2 1461,490.2 C1462.4,490.2 1463.5,491.4 1463.40632,492.8 C1461.5,556.8 1444.4,626.4 1414,693.9 C1381.6,765.9 1334.4,834.4 1277.4,892 C1213.5,956.6 1138.2,1007.6 1053.7,1043.7 C959.3,1084 854.8,1104.7 743,1105.3 C743,1105.3 743,1105.3 743,1105.3 Z"></path>
+        <path d="M742.4,1359.1 C657.3,1359.1 572.3,1345.5 489.5,1318.7 C408.6,1292.5 333.2,1254.8 265.4,1206.6 C124.9,1106.7 30.8,970.7 0.4,823.7 C0.1,822.3 1,821 2.3,820.7 C3.7,820.4 5,821.3 5.3,822.6 C67,1120.7 390.7,1354.1 742.4,1354.1 C742.6,1354.1 742.8,1354.1 743,1354.1 C743,1354.1 743,1354.1 743,1354.1 C744.4,1354.1 745.5,1355.2 745.5,1356.6 C745.5,1358 744.4,1359.1 743,1359.1 C742.8,1359.1 742.6,1359.1 742.4,1359.1 Z"></path>
+        <path d="M743.6,1359.1 C743.4,1359.1 743.2,1359.1 743,1359.1 C741.6,1359.1 740.5,1358 740.5,1356.6 C740.5,1355.2 741.6,1354.1 743,1354.1 C743,1354.1 743,1354.1 743,1354.1 C743.2,1354.1 743.4,1354.1 743.6,1354.1 C1095.3,1354.1 1419,1120.7 1480.7,822.6 C1481,821.2 1482.3,820.4 1483.7,820.7 C1485.1,821 1485.9,822.3 1485.6,823.7 C1455.2,970.7 1361.1,1106.7 1220.6,1206.6 C1152.8,1254.8 1077.5,1292.5 996.5,1318.7 C913.7,1345.5 828.6,1359.1 743.6,1359.1 Z"></path>
+        <path d="M675.5,882.8 C675.4,882.8 675.3,882.8 675.2,882.8 C548.1,866.3 431.2,804.1 345.9,707.7 C259.9,610.5 212.5,485.4 212.5,355.4 C212.5,312.4 217.6,269.6 227.7,228.4 C237.5,188.2 252.1,149.2 271,112.4 C271.6,111.2 273.1,110.7 274.4,111.3 C275.6,111.9 276.1,113.4 275.5,114.7 C237.1,189.3 217.6,270.3 217.6,355.4 C217.6,619.2 414.7,843.9 676,877.9 C677.4,878.1 678.3,879.3 678.2,880.7 C677.8,881.9 676.7,882.8 675.5,882.8 Z"></path>
+        <path d="M811.5,883.1 C810.3,883.1 809.2,882.2 809,880.9 C808.8,879.5 809.8,878.3 811.2,878.1 C1073.4,844.9 1271.1,620.2 1271.1,355.4 C1271.1,270.6 1251.5,189.6 1213,114.7 C1212.4,113.5 1212.9,112 1214.1,111.3 C1215.3,110.7 1216.8,111.2 1217.5,112.4 C1236.4,149.2 1251,188.3 1260.9,228.4 C1271,269.7 1276.2,312.5 1276.2,355.4 C1276.2,485.7 1228.7,611.1 1142.4,708.4 C1056.8,804.9 939.4,867 811.9,883.1 C811.7,883 811.6,883.1 811.5,883.1 Z"></path>
+    </g>
+    <g id="titles" className="titles" transform="translate(-0.000000, 41.000000)">
+        <text className="title_seat_row" id="title_17">
+            <tspan x="753" y="631">17</tspan>
+        </text>
+        <text className="title_seat_row" id="title_16">
+            <tspan x="753" y="604">16</tspan>
+        </text>
+        <text className="title_seat_row" id="title_15">
+            <tspan x="753" y="576">15</tspan>
+        </text>
+        <text className="title_seat_row" id="title_14">
+            <tspan x="753" y="549">14</tspan>
+        </text>
+        <text className="title_seat_row" id="title_13">
+            <tspan x="753" y="522">13</tspan>
+        </text>
+        <text className="title_seat_row" id="title_12">
+            <tspan x="753" y="494">12</tspan>
+        </text>
+        <text className="title_seat_row" id="title_11">
+            <tspan x="1017" y="414">11</tspan>
+        </text>
+        <text className="title_seat_row" id="title_10">
+            <tspan x="1009" y="390">10</tspan>
+        </text>
+        <text className="title_seat_row" id="title_9">
+            <tspan x="1003" y="365">9</tspan>
+        </text>
+        <text className="title_seat_row" id="title_8">
+            <tspan x="991" y="343">8</tspan>
+        </text>
+        <text className="title_seat_row" id="title_7">
+            <tspan x="977" y="319">7</tspan>
+        </text>
+        <text className="title_seat_row" id="title_6">
+            <tspan x="967" y="296">6</tspan>
+        </text>
+        <text className="title_seat_row" id="title_5">
+            <tspan x="955" y="272">5</tspan>
+        </text>
+        <text className="title_seat_row" id="title_4">
+            <tspan x="949" y="246">4</tspan>
+        </text>
+        <text className="title_seat_row" id="title_3">
+            <tspan x="943" y="223">3</tspan>
+        </text>
+        <text className="title_seat_row" id="title_2">
+            <tspan x="934" y="200">2</tspan>
+        </text>
+        <text className="title_seat_row" id="title_1">
+            <tspan x="921" y="177">1</tspan>
+        </text>
+        <text className="title_seat_row" id="title_11">
+            <tspan x="492" y="414">11</tspan>
+        </text>
+        <text className="title_seat_row" id="title_10">
+            <tspan x="498" y="390">10</tspan>
+        </text>
+        <text className="title_seat_row" id="title_9">
+            <tspan x="515" y="365">9</tspan>
+        </text>
+        <text className="title_seat_row" id="title_8">
+            <tspan x="527" y="343">8</tspan>
+        </text>
+        <text className="title_seat_row" id="title_7">
+            <tspan x="540" y="319">7</tspan>
+        </text>
+        <text className="title_seat_row" id="title_6">
+            <tspan x="552" y="296">6</tspan>
+        </text>
+        <text className="title_seat_row" id="title_5">
+            <tspan x="564" y="272">5</tspan>
+        </text>
+        <text className="title_seat_row" id="title_4">
+            <tspan x="569" y="246">4</tspan>
+        </text>
+        <text className="title_seat_row" id="title_3">
+            <tspan x="577" y="223">3</tspan>
+        </text>
+        <text className="title_seat_row" id="title_2">
+            <tspan x="585" y="200">2</tspan>
+        </text>
+        <text className="title_seat_row" id="title_1">
+            <tspan x="594" y="177">1</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_9" transform="translate(1509.000000, 836.500000) rotate(-74.000000) translate(-1509.000000, -836.500000) ">
+            <tspan x="1478" y="842">ЛОЖА 9</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_8" transform="translate(1440.000000, 982.500000) rotate(-57.000000) translate(-1440.000000, -982.500000) ">
+            <tspan x="1409" y="988">ЛОЖА 8</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_7" transform="translate(1330.000000, 1117.500000) rotate(-41.000000) translate(-1330.000000, -1117.500000) ">
+            <tspan x="1299" y="1123">ЛОЖА 7</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_6" transform="translate(1175.000000, 1229.500000) rotate(-29.000000) translate(-1175.000000, -1229.500000) ">
+            <tspan x="1144" y="1235">ЛОЖА 6</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_5">
+            <tspan x="730" y="1342">ЛОЖА 5</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_4" transform="translate(346.000000, 1226.500000) rotate(32.000000) translate(-346.000000, -1226.500000) ">
+            <tspan x="315" y="1232">ЛОЖА 4</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_3" transform="translate(180.000000, 1107.500000) rotate(45.000000) translate(-180.000000, -1107.500000) ">
+            <tspan x="149" y="1113">ЛОЖА 3</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_2" transform="translate(75.000000, 975.500000) rotate(60.000000) translate(-75.000000, -975.500000) ">
+            <tspan x="44" y="981">ЛОЖА 2</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_1" transform="translate(18.000000, 844.500000) rotate(73.000000) translate(-18.000000, -844.500000) ">
+            <tspan x="-13" y="850">ЛОЖА 1</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_11" transform="translate(1485.843800, 541.440788) rotate(-78.000000) translate(-1485.843800, -541.440788) ">
+            <tspan x="1450.8438" y="546.940788">ЛОЖА 11</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_10" transform="translate(1427.078536, 706.999315) rotate(-62.000000) translate(-1427.078536, -706.999315) ">
+            <tspan x="1391.57854" y="712.499315">ЛОЖА 10</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_9" transform="translate(1332.000000, 842.500000) rotate(-48.000000) translate(-1332.000000, -842.500000) ">
+            <tspan x="1301" y="848">ЛОЖА 9</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_8" transform="translate(1164.000000, 977.500000) rotate(-30.000000) translate(-1164.000000, -977.500000) ">
+            <tspan x="1133" y="983">ЛОЖА 8</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_7" transform="translate(1016.000000, 1041.500000) rotate(-19.000000) translate(-1016.000000, -1041.500000) ">
+            <tspan x="985" y="1047">ЛОЖА 7</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_5" transform="translate(502.000000, 1041.500000) rotate(17.000000) translate(-502.000000, -1041.500000) ">
+            <tspan x="471" y="1047">ЛОЖА 5</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_4" transform="translate(353.000000, 972.500000) rotate(34.000000) translate(-353.000000, -972.500000) ">
+            <tspan x="322" y="978">ЛОЖА 4</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_3" transform="translate(182.000000, 829.500000) rotate(49.000000) translate(-182.000000, -829.500000) ">
+            <tspan x="151" y="835">ЛОЖА 3</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_2" transform="translate(89.000000, 693.500000) rotate(66.000000) translate(-89.000000, -693.500000) ">
+            <tspan x="58" y="699">ЛОЖА 2</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_1" transform="translate(37.000000, 540.500000) rotate(76.000000) translate(-37.000000, -540.500000) ">
+            <tspan x="6" y="546">ЛОЖА 1</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_10" transform="translate(1309.078536, 328.999315) rotate(-89.000000) translate(-1309.078536, -328.999315) ">
+            <tspan x="1273.57854" y="334.499315">ЛОЖА 10</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_9" transform="translate(1284.000000, 488.500000) rotate(-70.000000) translate(-1284.000000, -488.500000) ">
+            <tspan x="1253" y="494">ЛОЖА 9</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_8" transform="translate(1229.000000, 608.500000) rotate(-56.000000) translate(-1229.000000, -608.500000) ">
+            <tspan x="1198" y="614">ЛОЖА 8</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_7" transform="translate(1132.000000, 723.500000) rotate(-45.000000) translate(-1132.000000, -723.500000) ">
+            <tspan x="1101" y="729">ЛОЖА 7</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_6" transform="translate(944.000000, 832.500000) rotate(-18.000000) translate(-944.000000, -832.500000) ">
+            <tspan x="913" y="838">ЛОЖА 6</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_5" transform="translate(582.000000, 832.500000) rotate(17.000000) translate(-582.000000, -832.500000) ">
+            <tspan x="551" y="838">ЛОЖА 5</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_4" transform="translate(396.000000, 725.500000) rotate(43.000000) translate(-396.000000, -725.500000) ">
+            <tspan x="365" y="731">ЛОЖА 4</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_3" transform="translate(297.000000, 609.500000) rotate(58.000000) translate(-297.000000, -609.500000) ">
+            <tspan x="266" y="615">ЛОЖА 3</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_2" transform="translate(243.000000, 492.500000) rotate(73.000000) translate(-243.000000, -492.500000) ">
+            <tspan x="212" y="498">ЛОЖА 2</tspan>
+        </text>
+        <text className="title_lodge" id="title_lodge_1" transform="translate(217.000000, 329.500000) rotate(89.000000) translate(-217.000000, -329.500000) ">
+            <tspan x="186" y="335">ЛОЖА 1</tspan>
+        </text>
+        <text id="title_area">
+            <tspan x="703" y="1167">БАЛКОН</tspan>
+        </text>
+        <text className="title_area" id="title_lodges_mezzanine">
+            <tspan x="623" y="887">ЛОЖИ БЕЛЬЭТАЖА</tspan>
+        </text>
+        <text className="title_area" id="title_lodges_benoir">
+            <tspan x="644" y="743">ЛОЖИ БЕНУАРА</tspan>
+        </text>
+        <text className="title_area" id="title_parterre">
+            <tspan x="706" y="461">ПАРТЕР</tspan>
+        </text>
+        <text className="title_area" id="title_orchestra">
+            <tspan x="694" y="111">ОРКЕСТР</tspan>
+        </text>
+        <text className="title_area" id="title_scene">
+            <tspan x="710" y="27">СЦЕНА</tspan>
+        </text>
+    </g>
+</g>

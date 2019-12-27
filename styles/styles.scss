@@ -1,0 +1,64 @@
+$seatFree: yellowgreen;
+$seatSold: #d2d2d2;
+$seatBlocked: pink;
+
+.seat {
+    cursor: pointer;
+
+    &[data-status='sold'] {
+        cursor: initial;
+
+        .seat_cycle {
+            fill: $seatSold;
+        }
+    }
+
+    &[data-status='blocked'] {
+        .seat_cycle {
+            fill: $seatBlocked;
+        }
+    }
+
+    .seat_text {
+        font-size: 12px;
+        font-weight: normal;
+        font-family: Arial;
+        fill: #FFFFFF;
+    }
+
+    .seat_cycle {
+        fill: $seatFree;
+        fill-rule: nonzero;
+    }
+}
+
+
+.seats_bg {
+    fill: #F7F7F7;
+    fill-rule: nonzero;
+}
+
+.curves {
+    fill: #AA9055;
+    fill-rule: nonzero;
+}
+
+.titles {
+    fill: #FFFFFF;
+    font-family: Arial;
+    font-weight: normal;
+
+    .title_seat_row {
+        font-size: 16px;
+        fill: #AA9055;
+    }
+
+    .title_lodge {
+        font-size: 16px;
+    }
+
+    .title_area {
+        fill: #AA9055;
+        font-size: 30px;
+    }
+}
