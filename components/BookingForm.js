@@ -7,13 +7,13 @@ export default class BookingForm extends Component {
             <div>
                 <div className="overlay"></div>
 
-                <div className="booking-body">
-                    <div className="booking-header">
-                        <div className="booking-title">Бронирование билетов</div>
+                <div className="modal-body booking-body">
+                    <div className="modal-header booking-header">
+                        <div className="modal-title booking-title">Бронирование билетов</div>
                         <button onClick={() => {this.props.handleCloseBookingForm()}}>close</button>
                     </div>
 
-                    <div className="booking-form">
+                    <div className="modal-content booking-content">
                          <form onSubmit={this.props.handleBooking()}>
                             <div className="form-group">
                                 <label htmlFor="name">Имя</label>

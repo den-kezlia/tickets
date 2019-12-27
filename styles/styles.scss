@@ -1,6 +1,6 @@
 @import 'normilize';
 @import 'statusbar';
-@import 'bookingForm';
+@import 'modal';
 
 $seatFree: yellowgreen;
 $seatSold: #d2d2d2;
@@ -73,6 +73,10 @@ $curvesColor: #AA9055;
         fill: $curvesColor;
         font-size: 30px;
     }
+}
+
+.bold {
+    font-weight: bold;
 }
 
 .form-group {

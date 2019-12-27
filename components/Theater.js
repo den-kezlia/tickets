@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Map from './Map'
 import Statusbar from './Statusbar'
 import BookingForm from './BookingForm'
+import MaxToBookNotification from './MaxToBookNotification'
 
 export default class Theater extends Component {
     constructor(props) {
@@ -29,7 +30,9 @@ export default class Theater extends Component {
             bookedSeats: [],
             totalPrice: 0,
 
-            showForm: false
+            showForm: false,
+            showMaxToBookNotification: false,
+            maxSeatsToBook: 2,
         }
     }
 
@@ -85,7 +88,12 @@ export default class Theater extends Component {
         }
 
         itemStatus = itemStatus === 'free' ? 'booked' : 'free';
-        this.updateSeatStatus(item, itemStatus);
+
+        if (this.state.bookedSeats.length < this.state.maxSeatsToBook || itemStatus === 'free') {
+            this.updateSeatStatus(item, itemStatus);
+        } else {
+            this.setState({showMaxToBookNotification: true})
+        }
     }
 
     handleUnBookSeat(id) {
@@ -107,6 +115,10 @@ export default class Theater extends Component {
         console.log('booking')
     }
 
+    handleCloseMaxToBookNotification() {
+        this.setState({showMaxToBookNotification: false})
+    }
+
     render() {
         return (
             <div>
@@ -126,6 +138,12 @@ export default class Theater extends Component {
                         totalPrice={this.state.totalPrice}
                         handleCloseBookingForm={() => {this.handleCloseBookingForm()}}
                         handleBooking={() => {this.handleBooking()}} />
+                }
+
+                {this.state.showMaxToBookNotification &&
+                    <MaxToBookNotification
+                        maxSeatsToBook={this.setState.maxSeatsToBook}
+                        handleCloseMaxToBookNotification={() => {this.handleCloseMaxToBookNotification()}} />
                 }
             </div>
         )
