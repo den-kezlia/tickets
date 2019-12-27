@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Map from './Map'
 import Statusbar from './Statusbar'
+import BookingForm from './BookingForm'
 
 export default class Theater extends Component {
     constructor(props) {
@@ -9,7 +10,7 @@ export default class Theater extends Component {
         this.state = {
             seats: [{
                 id: 'p-1-1',
-                status: 'free',
+                status: 'booked',
                 price: 120
             }, {
                 id: 'p-1-2',
@@ -26,7 +27,9 @@ export default class Theater extends Component {
             }],
 
             bookedSeats: [],
-            totalPrice: 0
+            totalPrice: 0,
+
+            showForm: false
         }
     }
 
@@ -92,15 +95,37 @@ export default class Theater extends Component {
         this.updateSeatStatus(item, itemStatus);
     }
 
+    handleOpenBookingForm() {
+        this.setState({showForm: true})
+    }
+
+    handleCloseBookingForm() {
+        this.setState({showForm: false})
+    }
+
+    handleBooking() {
+        console.log('booking')
+    }
+
     render() {
         return (
             <div>
                 <Map onClick={(item) => this.handleBookSeat(item)} />
+
                 {this.state.bookedSeats.length > 0 &&
                     <Statusbar
                         bookedSeats={this.state.bookedSeats}
                         totalPrice={this.state.totalPrice}
-                        onClick={(id) => {this.handleUnBookSeat(id)}} />
+                        handleUnBookSeat={(id) => {this.handleUnBookSeat(id)}}
+                        handleOpenForm={() => {this.handleOpenBookingForm()}} />
+                }
+
+                {this.state.showForm &&
+                    <BookingForm
+                        bookedSeats={this.state.bookedSeats}
+                        totalPrice={this.state.totalPrice}
+                        handleCloseBookingForm={() => {this.handleCloseBookingForm()}}
+                        handleBooking={() => {this.handleBooking()}} />
                 }
             </div>
         )

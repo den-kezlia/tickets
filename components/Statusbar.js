@@ -23,7 +23,7 @@ export default class Statusbar extends Component {
                                         <span>
                                             {item.id} - ${item.price}грн
                                         </span>
-                                        <button onClick={() => {this.props.onClick(item.id)}}>X</button>
+                                        <button onClick={() => {this.props.handleUnBookSeat(item.id)}}>X</button>
                                     </li>
                                 )
                             })}
@@ -31,7 +31,7 @@ export default class Statusbar extends Component {
                     </div>
 
                     <div className="btn-wrapper">
-                        <button>Бронировать</button>
+                        <button className="btn" onClick={() => {this.props.handleOpenForm()}}>Продолжить</button>
                     </div>
                 </div>
             </div>
