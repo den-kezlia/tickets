@@ -142,7 +142,7 @@ export default class Theater extends Component {
 
                 {this.state.showMaxToBookNotification &&
                     <MaxToBookNotification
-                        maxSeatsToBook={this.setState.maxSeatsToBook}
+                        maxSeatsToBook={this.state.maxSeatsToBook}
                         handleCloseMaxToBookNotification={() => {this.handleCloseMaxToBookNotification()}} />
                 }
             </div>
