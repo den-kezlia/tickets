@@ -6,7 +6,7 @@ import MaxToBookNotification from './MaxToBookNotification'
 
 export default class Theater extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             seats: [{
@@ -32,6 +32,7 @@ export default class Theater extends Component {
 
             showForm: false,
             showMaxToBookNotification: false,
+            showSuccessFormMessage: false,
             maxSeatsToBook: 2,
         }
     }
@@ -108,11 +109,16 @@ export default class Theater extends Component {
     }
 
     handleCloseBookingForm() {
-        this.setState({showForm: false})
+        this.setState({
+            showForm: false,
+            showSuccessFormMessage: false
+        })
     }
 
-    handleBooking() {
-        console.log('booking')
+    handleBooking(e) {
+        e.preventDefault()
+
+        this.setState({showSuccessFormMessage: true})
     }
 
     handleCloseMaxToBookNotification() {
@@ -136,8 +142,9 @@ export default class Theater extends Component {
                     <BookingForm
                         bookedSeats={this.state.bookedSeats}
                         totalPrice={this.state.totalPrice}
+                        showSuccessFormMessage={this.state.showSuccessFormMessage}
                         handleCloseBookingForm={() => {this.handleCloseBookingForm()}}
-                        handleBooking={() => {this.handleBooking()}} />
+                        handleBooking={(e) => {this.handleBooking(e)}} />
                 }
 
                 {this.state.showMaxToBookNotification &&

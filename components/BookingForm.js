@@ -14,7 +14,12 @@ export default class BookingForm extends Component {
                     </div>
 
                     <div className="modal-content booking-content">
-                         <form onSubmit={this.props.handleBooking()}>
+                        {this.props.showSuccessFormMessage &&
+                            <div>
+                                Спасибо, мы свяжемся с вами в ближайшее время для подтверждения.
+                            </div>
+                        }
+                         <form onSubmit={(e) => {this.props.handleBooking(e)}}>
                             <div className="form-group">
                                 <label htmlFor="name">Имя</label>
                                 <input id="name" name="name" className="input" type="text" placeholder="Имя" required />
