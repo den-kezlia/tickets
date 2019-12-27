@@ -14,28 +14,29 @@ export default class BookingForm extends Component {
                     </div>
 
                     <div className="modal-content booking-content">
-                        {this.props.showSuccessFormMessage &&
+                        {this.props.showSuccessFormMessage ? (
                             <div>
                                 Спасибо, мы свяжемся с вами в ближайшее время для подтверждения.
                             </div>
-                        }
-                         <form onSubmit={(e) => {this.props.handleBooking(e)}}>
-                            <div className="form-group">
-                                <label htmlFor="name">Имя</label>
-                                <input id="name" name="name" className="input" type="text" placeholder="Имя" required />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <input id="email" name="email" type="email" placeholder="Email" required />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="phone">Телефон</label>
-                                <PhoneInput id="phone" name="phone" country={'ua'} />
-                            </div>
-                            <div className="form-group">
-                                <button className="btn btn-primary" type="submit">Забронировать</button>
-                            </div>
-                         </form>
+                        ) : (
+                            <form onSubmit={(e) => {this.props.handleBooking(e)}}>
+                                <div className="form-group">
+                                    <label htmlFor="name">Имя</label>
+                                    <input id="name" name="name" className="input" type="text" placeholder="Имя" required />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="email">Email</label>
+                                    <input id="email" name="email" type="email" placeholder="Email" required />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="phone">Телефон</label>
+                                    <PhoneInput id="phone" name="phone" country={'ua'} />
+                                </div>
+                                <div className="form-group">
+                                    <button className="btn btn-primary" type="submit">Забронировать</button>
+                                </div>
+                            </form>
+                        )}
                     </div>
                 </div>
             </div>
