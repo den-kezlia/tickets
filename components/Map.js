@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 
 export default class Map extends Component {
     render() {
         return (
-            <div>
+            <div className="map-wrapper" id="map-wrapper">
                 <svg viewBox="0 0 1519 1384">
                     <g id="seats_bg" className="seats_bg" transform="translate(26.000000, 277.000000)">
                         <path d="M105.9,611.2 L39.7,641.5 C36.6,642.9 32.8,641.4 31.6,638.2 C14.6,595.3 5.5,556.9 0.4,527.7 C-2.84772206e-14,525.3 1,522.9 3.1,521.6 C17.5,512.5 31.9,503.3 46.3,494.2 C49.4,492.2 53.6,493.5 55.1,496.9 C58.5,504.8 62.7,514.3 67.7,525 C73.1,536.6 86.1,564.3 103.7,594.3 C104.9,596.3 106.5,599.1 108.6,602.5 C110.5,605.6 109.2,609.7 105.9,611.2 Z"></path>

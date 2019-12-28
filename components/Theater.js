@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
+
 import Map from './Map'
 import Statusbar from './Statusbar'
 import BookingForm from './BookingForm'
@@ -128,15 +129,17 @@ export default class Theater extends Component {
     render() {
         return (
             <div>
-                <Map onClick={(item) => this.handleBookSeat(item)} />
+                <div className="wrapper">
+                    <Map onClick={(item) => this.handleBookSeat(item)} />
 
-                {this.state.bookedSeats.length > 0 &&
-                    <Statusbar
-                        bookedSeats={this.state.bookedSeats}
-                        totalPrice={this.state.totalPrice}
-                        handleUnBookSeat={(id) => {this.handleUnBookSeat(id)}}
-                        handleOpenForm={() => {this.handleOpenBookingForm()}} />
-                }
+                    {this.state.bookedSeats.length > 0 &&
+                        <Statusbar
+                            bookedSeats={this.state.bookedSeats}
+                            totalPrice={this.state.totalPrice}
+                            handleUnBookSeat={(id) => {this.handleUnBookSeat(id)}}
+                            handleOpenForm={() => {this.handleOpenBookingForm()}} />
+                    }
+                </div>
 
                 {this.state.showForm &&
                     <BookingForm
