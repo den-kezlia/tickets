@@ -1,4 +1,7 @@
 import React, {Component} from 'react'
+import Firebase from "firebase/app"
+import 'firebase/firestore'
+import config from "../config/firebase"
 
 import Map from './Map'
 import Statusbar from './Statusbar'
@@ -10,24 +13,6 @@ export default class Theater extends Component {
         super(props)
 
         this.state = {
-            seats: [{
-                id: 'p-1-1',
-                status: 'booked',
-                price: 120
-            }, {
-                id: 'p-1-2',
-                status: 'sold',
-                price: 120
-            }, {
-                id: 'p-1-3',
-                status: 'free',
-                price: 120
-            }, {
-                id: 'p-1-4',
-                status: 'free',
-                price: 100
-            }],
-
             bookedSeats: [],
             totalPrice: 0,
 
@@ -39,7 +24,31 @@ export default class Theater extends Component {
     }
 
     componentDidMount() {
-        const bookedSeats = [];
+        Firebase.initializeApp(config)
+        this.getSeats()
+        console.log('here')
+    }
+
+    getSeats() {
+        let db = Firebase.firestore();
+        db.collection('seats').onSnapshot(
+            querySnapshot => {
+                let seats = []
+                querySnapshot.forEach(function (doc) {
+                    seats.push(doc.data())
+                })
+
+                this.setState({seats: seats})
+                this.generateState()
+            },
+            error => {
+                console.error(error)
+            }
+        )
+    }
+
+    generateState() {
+        const bookedSeats = []
         let totalPrice = 0;
 
         this.state.seats.forEach((element) => {

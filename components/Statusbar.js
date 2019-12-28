@@ -21,7 +21,7 @@ export default class Statusbar extends Component {
                                 return (
                                     <li className="booked-seat" key={'booked-' + item.id}>
                                         <span>
-                                            {item.id} - ${item.price}грн
+                                            {item.id} - {item.price}грн
                                         </span>
                                         <button onClick={() => {this.props.handleUnBookSeat(item.id)}}>X</button>
                                     </li>
