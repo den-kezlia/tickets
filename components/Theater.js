@@ -33,9 +33,9 @@ export default class Theater extends Component {
         let db = Firebase.firestore();
         db.collection('seats').onSnapshot(
             querySnapshot => {
-                let seats = []
+                let seats = {}
                 querySnapshot.forEach(function (doc) {
-                    seats.push(doc.data())
+                    seats[doc.id] = doc.data()
                 })
 
                 this.setState({seats: seats})
@@ -51,7 +51,8 @@ export default class Theater extends Component {
         const bookedSeats = []
         let totalPrice = 0;
 
-        this.state.seats.forEach((element) => {
+        for (let id in this.state.seats) {
+            const element = this.state.seats[id];
             const seat = document.getElementById(element.id);
             seat.setAttribute('data-status', element.status);
 
@@ -59,7 +60,7 @@ export default class Theater extends Component {
                 bookedSeats.push(element)
                 totalPrice = totalPrice + element.price
             }
-        });
+        }
 
         this.setState({
             bookedSeats: bookedSeats,
@@ -72,16 +73,18 @@ export default class Theater extends Component {
         const bookedSeats = [];
         let totalPrice = 0;
 
-        seats.forEach((element, index) => {
-            if (element.id === item.id) {
-                seats[index].status = itemStatus;
+        for (let id in seats) {
+            const seat = seats[id];
+
+            if (seat.id === item.id) {
+                seats[id].status = itemStatus;
             }
 
-            if (element.status === 'booked') {
-                bookedSeats.push(element)
-                totalPrice = totalPrice + element.price
+            if (seat.status === 'booked') {
+                bookedSeats.push(seat)
+                totalPrice = totalPrice + seat.price
             }
-        });
+        }
 
         this.setState({
             seats: seats,
