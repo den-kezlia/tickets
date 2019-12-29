@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import PhoneInput from 'react-phone-input-2'
 
+import Timer from './Timer'
+
 export default class BookingForm extends Component {
     render() {
         return (
@@ -20,6 +22,8 @@ export default class BookingForm extends Component {
                             </div>
                         ) : (
                             <form onSubmit={(e) => {this.props.handleBooking(e)}}>
+                                <Timer timer={this.props.timer} />
+
                                 <div className="form-group">
                                     <label htmlFor="name">Имя</label>
                                     <input id="name" name="name" className="input" type="text" placeholder="Имя" required />

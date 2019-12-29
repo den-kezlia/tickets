@@ -20,6 +20,7 @@ export default class Theater extends Component {
             showMaxToBookNotification: false,
             showSuccessFormMessage: false,
             maxSeatsToBook: 2,
+            timer: 0
         }
     }
 
@@ -70,20 +71,18 @@ export default class Theater extends Component {
 
     updateSeatStatus(item, itemStatus) {
         const seats = this.state.seats;
-        const bookedSeats = [];
-        let totalPrice = 0;
+        let bookedSeats = this.state.bookedSeats;
+        let totalPrice = this.state.totalPrice;
 
-        for (let id in seats) {
-            const seat = seats[id];
-
-            if (seat.id === item.id) {
-                seats[id].status = itemStatus;
-            }
-
-            if (seat.status === 'booked') {
-                bookedSeats.push(seat)
-                totalPrice = totalPrice + seat.price
-            }
+        seats[item.id].status = itemStatus
+        if (itemStatus === 'booked') {
+            bookedSeats.push(seats[item.id])
+            totalPrice = totalPrice + seats[item.id].price
+        } else {
+            bookedSeats = bookedSeats.filter((i) => {
+                return i.id !== item.id
+            })
+            totalPrice = totalPrice - seats[item.id].price
         }
 
         this.setState({
@@ -91,6 +90,7 @@ export default class Theater extends Component {
             bookedSeats: bookedSeats,
             totalPrice: totalPrice
         })
+
         item.setAttribute('data-status', itemStatus);
     }
 
@@ -118,6 +118,37 @@ export default class Theater extends Component {
     }
 
     handleOpenBookingForm() {
+        this.setState({
+            timer: 15
+        })
+
+        let interval = setInterval(() => {
+            var timer = this.state.timer
+            this.setState({timer: timer - 1})
+        }, 1000)
+
+        setTimeout(() => {
+            let bookedSeats = this.state.bookedSeats
+            const seats = this.state.seats
+            const totalPrice = 0
+
+            bookedSeats.forEach((book) => {
+                seats[book.id].status = 'free'
+                document.getElementById(book.id).setAttribute('data-status', 'free')
+            });
+
+            bookedSeats = []
+
+            this.setState({
+                seats: seats,
+                bookedSeats: bookedSeats,
+                totalPrice: totalPrice,
+                showForm: false
+            })
+
+            clearInterval(interval)
+        }, 15000);
+
         this.setState({showForm: true})
     }
 
@@ -144,13 +175,12 @@ export default class Theater extends Component {
                 <div className="wrapper">
                     <Map onClick={(item) => this.handleBookSeat(item)} />
 
-                    {this.state.bookedSeats.length > 0 &&
-                        <Statusbar
-                            bookedSeats={this.state.bookedSeats}
-                            totalPrice={this.state.totalPrice}
-                            handleUnBookSeat={(id) => {this.handleUnBookSeat(id)}}
-                            handleOpenForm={() => {this.handleOpenBookingForm()}} />
-                    }
+                    <Statusbar
+                        bookedSeats={this.state.bookedSeats}
+                        totalPrice={this.state.totalPrice}
+                        timer={this.state.timer}
+                        handleUnBookSeat={(id) => {this.handleUnBookSeat(id)}}
+                        handleOpenForm={() => {this.handleOpenBookingForm()}} />
                 </div>
 
                 {this.state.showForm &&
@@ -158,6 +188,7 @@ export default class Theater extends Component {
                         bookedSeats={this.state.bookedSeats}
                         totalPrice={this.state.totalPrice}
                         showSuccessFormMessage={this.state.showSuccessFormMessage}
+                        timer={this.state.timer}
                         handleCloseBookingForm={() => {this.handleCloseBookingForm()}}
                         handleBooking={(e) => {this.handleBooking(e)}} />
                 }
