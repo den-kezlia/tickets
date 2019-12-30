@@ -94,6 +94,26 @@ export default class Theater extends Component {
         item.setAttribute('data-status', itemStatus);
     }
 
+    resetBookedSeats() {
+        let bookedSeats = this.state.bookedSeats
+        const seats = this.state.seats
+        const totalPrice = 0
+
+        bookedSeats.forEach((book) => {
+            seats[book.id].status = 'free'
+            document.getElementById(book.id).setAttribute('data-status', 'free')
+        });
+
+        bookedSeats = []
+
+        this.setState({
+            seats: seats,
+            bookedSeats: bookedSeats,
+            totalPrice: totalPrice,
+            timer: 0
+        })
+    }
+
     handleBookSeat(item) {
         let itemStatus = item.getAttribute('data-status');
 
@@ -122,31 +142,14 @@ export default class Theater extends Component {
             timer: 15
         })
 
-        let interval = setInterval(() => {
+        this.interval = setInterval(() => {
             var timer = this.state.timer
             this.setState({timer: timer - 1})
         }, 1000)
 
         setTimeout(() => {
-            let bookedSeats = this.state.bookedSeats
-            const seats = this.state.seats
-            const totalPrice = 0
-
-            bookedSeats.forEach((book) => {
-                seats[book.id].status = 'free'
-                document.getElementById(book.id).setAttribute('data-status', 'free')
-            });
-
-            bookedSeats = []
-
-            this.setState({
-                seats: seats,
-                bookedSeats: bookedSeats,
-                totalPrice: totalPrice,
-                showForm: false
-            })
-
-            clearInterval(interval)
+            this.resetBookedSeats()
+            clearInterval(this.interval)
         }, 15000);
 
         this.setState({showForm: true})
@@ -162,6 +165,8 @@ export default class Theater extends Component {
     handleBooking(e) {
         e.preventDefault()
 
+        this.resetBookedSeats()
+        clearInterval(this.interval)
         this.setState({showSuccessFormMessage: true})
     }
 

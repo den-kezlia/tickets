@@ -15,7 +15,7 @@ export default class MaxToBookNotification extends Component {
                     </div>
 
                     <div className="modal-content">
-                        <button onClick={() => {this.props.handleCloseMaxToBookNotification()}} className="btn btn-primary" type="submit">Забронировать</button>
+                        <button onClick={() => {this.props.handleCloseMaxToBookNotification()}} className="btn btn-primary" type="submit">Закрыть</button>
                     </div>
                 </div>
             </div>
