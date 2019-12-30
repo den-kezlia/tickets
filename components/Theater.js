@@ -100,7 +100,7 @@ export default class Theater extends Component {
         item.setAttribute('data-status', itemStatus)
     }
 
-    resetBookedSeats() {
+    resetBookedSeats(hideBookingForm = true) {
         let bookedSeats = this.state.bookedSeats
         const seats = this.state.seats
         const totalPrice = 0
@@ -116,8 +116,16 @@ export default class Theater extends Component {
             seats: seats,
             bookedSeats: bookedSeats,
             totalPrice: totalPrice,
-            timer: 0
+            timer: 0,
+            showForm: hideBookingForm
         })
+    }
+
+    clearTimer() {
+        clearInterval(this.interval)
+        clearTimeout(this.timer)
+        this.setState({timer: 0})
+        this.timer = null
     }
 
     handleBookSeat(item) {
@@ -139,7 +147,10 @@ export default class Theater extends Component {
     handleUnBookSeat(id) {
         const item = document.getElementById(id)
         const itemStatus = CST.STATUS.FREE
-        // TODO: remove timer for the latest seat
+
+        if (this.state.bookedSeats.length === 1) {
+            this.clearTimer()
+        }
 
         this.updateSeatStatus(item, itemStatus)
     }
@@ -149,21 +160,23 @@ export default class Theater extends Component {
             timer: CST.TIMER
         })
 
-        this.interval = setInterval(() => {
-            var timer = this.state.timer
-            this.setState({timer: timer - 1})
-        }, 1000)
+        if (!this.timer) {
+            this.interval = setInterval(() => {
+                var timer = this.state.timer
+                this.setState({timer: timer - 1})
+            }, 1000)
 
-        setTimeout(() => {
-            this.resetBookedSeats()
-            clearInterval(this.interval)
-        }, CST.TIMER * 1000)
+            this.timer = setTimeout(() => {
+                this.resetBookedSeats(false)
+                this.clearTimer()
+                console.log('timeout')
+            }, CST.TIMER * 1000)
+        }
 
         this.setState({showForm: true})
     }
 
     handleCloseBookingForm() {
-        // TODO: reset timer
         this.setState({
             showForm: false,
             showSuccessFormMessage: false
@@ -183,7 +196,7 @@ export default class Theater extends Component {
         .then(data => {
             if (data.ok) {
                 this.resetBookedSeats()
-                clearInterval(this.interval)
+                this.clearTimer()
                 this.setState({showSuccessFormMessage: true})
             }
         })
