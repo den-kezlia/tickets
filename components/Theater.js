@@ -156,11 +156,11 @@ export default class Theater extends Component {
     }
 
     handleOpenBookingForm() {
-        this.setState({
-            timer: CST.TIMER
-        })
-
         if (!this.timer) {
+            this.setState({
+                timer: CST.TIMER
+            })
+
             this.interval = setInterval(() => {
                 var timer = this.state.timer
                 this.setState({timer: timer - 1})
