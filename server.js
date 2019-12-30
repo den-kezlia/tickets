@@ -10,9 +10,11 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({dev})
 const handle = app.getRequestHandler()
 
-const firebase = admin.initializeApp({
+const firebaseAuth = admin.initializeApp({
     credential: admin.credential.cert(require('./config/server.json'))
-}, 'server')
+})
+
+let db = admin.firestore();
 
 app.prepare().then(() => {
     const server = express()
@@ -31,7 +33,7 @@ app.prepare().then(() => {
     )
 
     server.use((req, res, next) => {
-        req.firebaseServer = firebase
+        req.firebaseServer = firebaseAuth
         next()
     })
 
@@ -39,7 +41,7 @@ app.prepare().then(() => {
         if (!req.body) return res.sendStatus(400)
 
         const token = req.body.token
-        firebase
+        firebaseAuth
             .auth()
             .verifyIdToken(token)
             .then(decodedToken => {
@@ -60,6 +62,67 @@ app.prepare().then(() => {
         res.json({
             status: true
         })
+    })
+
+    server.post('/api/bookSeats', (req, res, next) => {
+        db.collection('seats').get()
+        .then((seatsSnapshot) => {
+            let seats = {};
+
+            seatsSnapshot.forEach((doc) => {
+                seats[doc.id] = doc.data()
+            });
+
+            if (Object.entries(seats).length && req.body.bookedSeats.length) {
+                let areSeatsFree = true;
+                const bookedSeats = req.body.bookedSeats;
+
+                bookedSeats.forEach(item => {
+                    if (seats[item.id].status !== 'free') {
+                        areSeatsFree = false
+                    }
+                })
+
+                if (areSeatsFree) {
+                    bookedSeats.forEach(item => {
+                        let seat = db.collection('seats').doc(item.id)
+                        seat.update({
+                            status: 'sold',
+                            soldTo: req.body.form.phone
+                        })
+                    })
+
+                    let user = db.collection('users').doc(req.body.form.phone)
+                    user.get().then(doc => {
+                        let userOrderedSeats = [];
+
+                        if (!doc.exists) {
+                            console.log('No such document!');
+                        } else {
+                            userOrderedSeats = doc.data().orderedSeats;
+                        }
+
+                        userOrderedSeats = userOrderedSeats.concat(bookedSeats.map(item => {return item.id}))
+
+                        user.set({
+                            email: req.body.form.email,
+                            name: req.body.form.name,
+                            phone: req.body.form.phone,
+                            orderedSeats: userOrderedSeats
+                        }, {merge: true})
+                    })
+                }
+            }
+        })
+        .catch((err) => {
+            console.log('Error getting documents', err);
+        });
+
+        res.json({
+            status: true
+        })
+
+        next()
     })
 
     server.get('*', (req, res) => {

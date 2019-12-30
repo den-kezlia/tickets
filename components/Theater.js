@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Firebase from "firebase/app"
 import 'firebase/firestore'
 import config from "../config/firebase"
+import CST from '../config/CST'
 
 import Map from './Map'
 import Statusbar from './Statusbar'
@@ -19,19 +20,24 @@ export default class Theater extends Component {
             showForm: false,
             showMaxToBookNotification: false,
             showSuccessFormMessage: false,
-            maxSeatsToBook: 2,
-            timer: 0
+            maxSeatsToBook: CST.MAX_SEATS_TO_BOOK,
+            timer: 0,
+
+            form: {
+                name: '',
+                email: '',
+                phone: ''
+            }
         }
     }
 
     componentDidMount() {
         Firebase.initializeApp(config)
         this.getSeats()
-        console.log('here')
     }
 
     getSeats() {
-        let db = Firebase.firestore();
+        let db = Firebase.firestore()
         db.collection('seats').onSnapshot(
             querySnapshot => {
                 let seats = {}
@@ -50,14 +56,14 @@ export default class Theater extends Component {
 
     generateState() {
         const bookedSeats = []
-        let totalPrice = 0;
+        let totalPrice = 0
 
         for (let id in this.state.seats) {
-            const element = this.state.seats[id];
-            const seat = document.getElementById(element.id);
-            seat.setAttribute('data-status', element.status);
+            const element = this.state.seats[id]
+            const seat = document.getElementById(element.id)
+            seat.setAttribute('data-status', element.status)
 
-            if (element.status === 'booked') {
+            if (element.status === CST.STATUS.BOOKED) {
                 bookedSeats.push(element)
                 totalPrice = totalPrice + element.price
             }
@@ -66,16 +72,16 @@ export default class Theater extends Component {
         this.setState({
             bookedSeats: bookedSeats,
             totalPrice: totalPrice
-        });
+        })
     }
 
     updateSeatStatus(item, itemStatus) {
-        const seats = this.state.seats;
-        let bookedSeats = this.state.bookedSeats;
-        let totalPrice = this.state.totalPrice;
+        const seats = this.state.seats
+        let bookedSeats = this.state.bookedSeats
+        let totalPrice = this.state.totalPrice
 
         seats[item.id].status = itemStatus
-        if (itemStatus === 'booked') {
+        if (itemStatus === CST.STATUS.BOOKED) {
             bookedSeats.push(seats[item.id])
             totalPrice = totalPrice + seats[item.id].price
         } else {
@@ -91,7 +97,7 @@ export default class Theater extends Component {
             totalPrice: totalPrice
         })
 
-        item.setAttribute('data-status', itemStatus);
+        item.setAttribute('data-status', itemStatus)
     }
 
     resetBookedSeats() {
@@ -100,9 +106,9 @@ export default class Theater extends Component {
         const totalPrice = 0
 
         bookedSeats.forEach((book) => {
-            seats[book.id].status = 'free'
-            document.getElementById(book.id).setAttribute('data-status', 'free')
-        });
+            seats[book.id].status = CST.STATUS.FREE
+            document.getElementById(book.id).setAttribute('data-status', CST.STATUS.FREE)
+        })
 
         bookedSeats = []
 
@@ -115,31 +121,32 @@ export default class Theater extends Component {
     }
 
     handleBookSeat(item) {
-        let itemStatus = item.getAttribute('data-status');
+        let itemStatus = item.getAttribute('data-status')
 
-        if (itemStatus === 'sold') {
-            return;
+        if (itemStatus === CST.STATUS.SOLD) {
+            return
         }
 
-        itemStatus = itemStatus === 'free' ? 'booked' : 'free';
+        itemStatus = itemStatus === CST.STATUS.FREE ? CST.STATUS.BOOKED : CST.STATUS.FREE
 
-        if (this.state.bookedSeats.length < this.state.maxSeatsToBook || itemStatus === 'free') {
-            this.updateSeatStatus(item, itemStatus);
+        if (this.state.bookedSeats.length < this.state.maxSeatsToBook || itemStatus === CST.STATUS.FREE) {
+            this.updateSeatStatus(item, itemStatus)
         } else {
             this.setState({showMaxToBookNotification: true})
         }
     }
 
     handleUnBookSeat(id) {
-        const item = document.getElementById(id);
-        const itemStatus = 'free';
+        const item = document.getElementById(id)
+        const itemStatus = CST.STATUS.FREE
+        // TODO: remove timer for the latest seat
 
-        this.updateSeatStatus(item, itemStatus);
+        this.updateSeatStatus(item, itemStatus)
     }
 
     handleOpenBookingForm() {
         this.setState({
-            timer: 15
+            timer: CST.TIMER
         })
 
         this.interval = setInterval(() => {
@@ -150,12 +157,13 @@ export default class Theater extends Component {
         setTimeout(() => {
             this.resetBookedSeats()
             clearInterval(this.interval)
-        }, 15000);
+        }, CST.TIMER * 1000)
 
         this.setState({showForm: true})
     }
 
     handleCloseBookingForm() {
+        // TODO: reset timer
         this.setState({
             showForm: false,
             showSuccessFormMessage: false
@@ -164,28 +172,56 @@ export default class Theater extends Component {
 
     handleBooking(e) {
         e.preventDefault()
+        const form = this.state.form
+        const bookedSeats = this.state.bookedSeats
 
-        this.resetBookedSeats()
-        clearInterval(this.interval)
-        this.setState({showSuccessFormMessage: true})
+        fetch('/api/bookSeats', {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({form, bookedSeats})
+        })
+        .then(data => {
+            if (data.ok) {
+                this.resetBookedSeats()
+                clearInterval(this.interval)
+                this.setState({showSuccessFormMessage: true})
+            }
+        })
+        .catch(error => {
+            console.log('error ' + error)
+        })
     }
 
     handleCloseMaxToBookNotification() {
         this.setState({showMaxToBookNotification: false})
     }
 
+    handleFieldChange(e) {
+        const form = this.state.form
+
+        if (e.target !== undefined) {
+            form[e.target.name] = e.target.value
+        } else {
+            form.phone = e;
+        }
+        this.setState({form: form})
+    }
+
     render() {
         return (
             <div>
                 <div className="wrapper">
-                    <Map onClick={(item) => this.handleBookSeat(item)} />
+                    <Map
+                        onClick={(item) => this.handleBookSeat(item)}
+                    />
 
                     <Statusbar
                         bookedSeats={this.state.bookedSeats}
                         totalPrice={this.state.totalPrice}
                         timer={this.state.timer}
                         handleUnBookSeat={(id) => {this.handleUnBookSeat(id)}}
-                        handleOpenForm={() => {this.handleOpenBookingForm()}} />
+                        handleOpenForm={() => {this.handleOpenBookingForm()}}
+                    />
                 </div>
 
                 {this.state.showForm &&
@@ -194,14 +230,18 @@ export default class Theater extends Component {
                         totalPrice={this.state.totalPrice}
                         showSuccessFormMessage={this.state.showSuccessFormMessage}
                         timer={this.state.timer}
+                        form={this.state.form}
+                        handleFieldChange={(e) => {this.handleFieldChange(e)}}
+                        handleBooking={(e) => {this.handleBooking(e)}}
                         handleCloseBookingForm={() => {this.handleCloseBookingForm()}}
-                        handleBooking={(e) => {this.handleBooking(e)}} />
+                    />
                 }
 
                 {this.state.showMaxToBookNotification &&
                     <MaxToBookNotification
                         maxSeatsToBook={this.state.maxSeatsToBook}
-                        handleCloseMaxToBookNotification={() => {this.handleCloseMaxToBookNotification()}} />
+                        handleCloseMaxToBookNotification={() => {this.handleCloseMaxToBookNotification()}}
+                    />
                 }
             </div>
         )
