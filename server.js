@@ -5,6 +5,8 @@ const FileStore = require('session-file-store')(session)
 const next = require('next')
 const admin = require('firebase-admin')
 
+const CST = require('./config/CST')
+
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({dev})
@@ -78,7 +80,7 @@ app.prepare().then(() => {
                 const bookedSeats = req.body.bookedSeats;
 
                 bookedSeats.forEach(item => {
-                    if (seats[item.id].status !== 'free') {
+                    if (seats[item.id].status !== CST.STATUS.FREE) {
                         areSeatsFree = false
                     }
                 })
@@ -87,7 +89,7 @@ app.prepare().then(() => {
                     bookedSeats.forEach(item => {
                         let seat = db.collection('seats').doc(item.id)
                         seat.update({
-                            status: 'sold',
+                            status: CST.STATUS.HOLD,
                             soldTo: req.body.form.phone
                         })
                     })

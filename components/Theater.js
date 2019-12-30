@@ -123,7 +123,7 @@ export default class Theater extends Component {
     handleBookSeat(item) {
         let itemStatus = item.getAttribute('data-status')
 
-        if (itemStatus === CST.STATUS.SOLD) {
+        if (itemStatus === CST.STATUS.SOLD || itemStatus === CST.STATUS.HOLD) {
             return
         }
 
