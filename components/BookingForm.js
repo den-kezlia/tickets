@@ -27,14 +27,23 @@ export default class BookingForm extends Component {
                                 <div className="form-group">
                                     <label htmlFor="name">Имя</label>
                                     <input id="name" name="name" onChange={(e) => this.props.handleFieldChange(e)} value={this.props.form.name} className="input" type="text" placeholder="Имя" required />
+                                    {this.props.form.nameError && (
+                                        <div class="form-error">{this.props.form.nameError}</div>
+                                    )}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email">Email</label>
                                     <input id="email" name="email" onChange={(e) => this.props.handleFieldChange(e)} value={this.props.form.email} type="email" placeholder="Email" required />
+                                    {this.props.form.emailError && (
+                                        <div class="form-error">{this.props.form.emailError}</div>
+                                    )}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="phone">Телефон</label>
                                     <PhoneInput id="phone" name="phone" onChange={(e) => this.props.handleFieldChange(e)} value={this.props.form.phone} country={'ua'} />
+                                    {this.props.form.phoneError && (
+                                        <div class="form-error">{this.props.form.phoneError}</div>
+                                    )}
                                 </div>
                                 <div className="form-group">
                                     <button className="btn btn-primary" type="submit">Забронировать</button>

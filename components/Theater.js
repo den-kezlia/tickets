@@ -187,22 +187,46 @@ export default class Theater extends Component {
         e.preventDefault()
         const form = this.state.form
         const bookedSeats = this.state.bookedSeats
+        let fieldsError = false;
 
-        fetch('/api/bookSeats', {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({form, bookedSeats})
-        })
-        .then(data => {
-            if (data.ok) {
-                this.resetBookedSeats()
-                this.clearTimer()
-                this.setState({showSuccessFormMessage: true})
-            }
-        })
-        .catch(error => {
-            console.log('error ' + error)
-        })
+        if (!form.name.length) {
+            form.nameError = 'Поле обязательно для заполнения';
+            fieldsError = true
+        } else {
+            form.nameError = ''
+        }
+
+        if (!form.email.length) {
+            form.emailError = 'Поле обязательно для заполнения';
+            fieldsError = true
+        } else {
+            form.emailError = ''
+        }
+
+        if (!form.phone.length) {
+            form.phoneError = 'Поле обязательно для заполнения';
+            fieldsError = true
+        } else {
+            form.phoneError = ''
+        }
+
+        if (!fieldsError) {
+            fetch('/api/bookSeats', {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({form, bookedSeats})
+            })
+            .then(data => {
+                if (data.ok) {
+                    this.resetBookedSeats()
+                    this.clearTimer()
+                    this.setState({showSuccessFormMessage: true})
+                }
+            })
+            .catch(error => {
+                console.log('error ' + error)
+            })
+        }
     }
 
     handleCloseMaxToBookNotification() {
@@ -214,9 +238,12 @@ export default class Theater extends Component {
 
         if (e.target !== undefined) {
             form[e.target.name] = e.target.value
+            form[e.target.name + 'Error'] = e.target.value ? '' : 'Поле обязательно для заполнения'
         } else {
             form.phone = e;
+            form.phoneError = e ? '' : 'Поле обязательно для заполнения'
         }
+
         this.setState({form: form})
     }
 
