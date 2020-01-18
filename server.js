@@ -66,10 +66,27 @@ app.prepare().then(() => {
         })
     })
 
-    server.post('/api/bookSeats', (req, res, next) => {
+    server.get('/api/getSeats', (req, res, next) => {
         db.collection('seats').get()
-        .then((seatsSnapshot) => {
+        .then(seatsSnapshot => {
             let seats = {};
+
+            seatsSnapshot.forEach((doc) => {
+                seats[doc.id] = doc.data()
+            });
+
+            res.json({seats: seats})
+        })
+        .catch(error => {console.log('Error ', error)})
+    })
+
+    server.post('/api/bookSeats', (req, res, next) => {
+        let errors = false;
+
+        db.collection('seats').get()
+        .then(seatsSnapshot => {
+            let seats = {};
+            let soldSeats = [];
 
             seatsSnapshot.forEach((doc) => {
                 seats[doc.id] = doc.data()
@@ -82,6 +99,7 @@ app.prepare().then(() => {
                 bookedSeats.forEach(item => {
                     if (seats[item.id].status !== CST.STATUS.FREE) {
                         areSeatsFree = false
+                        soldSeats.push(seats[item.id].id)
                     }
                 })
 
@@ -112,19 +130,25 @@ app.prepare().then(() => {
                             phone: req.body.form.phone,
                             orderedSeats: userOrderedSeats
                         }, {merge: true})
+
+                        res.json({
+                            status: true
+                        })
                     })
+                } else {
+                    errors = {
+                        status: 'error',
+                        soldSeats: soldSeats
+                    }
+
+                    res.json(errors)
                 }
             }
         })
-        .catch((err) => {
-            console.log('Error getting documents', err);
-        });
-
-        res.json({
-            status: true
-        })
-
-        next()
+        .catch((err) => res.json({
+            error: 'DB error',
+            message: 'Error getting documents', err
+        }))
     })
 
     server.get('*', (req, res) => {

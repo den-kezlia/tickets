@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-import Firebase from "firebase/app"
-import 'firebase/firestore'
-import config from "../config/firebase"
+import fetch from 'isomorphic-unfetch';
 import CST from '../config/CST'
 
 import Map from './Map'
@@ -32,26 +30,24 @@ export default class Theater extends Component {
     }
 
     componentDidMount() {
-        Firebase.initializeApp(config)
         this.getSeats()
     }
 
-    getSeats() {
-        let db = Firebase.firestore()
-        db.collection('seats').onSnapshot(
-            querySnapshot => {
-                let seats = {}
-                querySnapshot.forEach(function (doc) {
-                    seats[doc.id] = doc.data()
-                })
+    getSeats = async function() {
+        try {
+            const response = await fetch('/api/getSeats', {
+                method: 'GET',
+                headers: {"Content-Type": "application/json"}
+            })
+            const data = await response.json()
 
-                this.setState({seats: seats})
+            if (data) {
+                this.setState({seats: data.seats})
                 this.generateState()
-            },
-            error => {
-                console.error(error)
             }
-        )
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     generateState() {
@@ -211,21 +207,30 @@ export default class Theater extends Component {
         }
 
         if (!fieldsError) {
-            fetch('/api/bookSeats', {
-                method: 'POST',
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({form, bookedSeats})
-            })
-            .then(data => {
-                if (data.ok) {
-                    this.resetBookedSeats()
-                    this.clearTimer()
-                    this.setState({showSuccessFormMessage: true})
-                }
-            })
-            .catch(error => {
-                console.log('error ' + error)
-            })
+            this.bookSeats(form, bookedSeats)
+        }
+    }
+
+    bookSeats = async function (form, bookedSeats) {
+        const response = await fetch('/api/bookSeats', {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({form, bookedSeats})
+        });
+        const data = await response.json();
+
+        try {
+            if (data.status === 'error') {
+                this.clearTimer()
+                alert('seat was sold', data.soldSeats)
+                //this.setState({showSuccessFormMessage: true})
+            } else {
+                this.resetBookedSeats()
+                this.clearTimer()
+                this.setState({showSuccessFormMessage: true})
+            }
+        } catch(error) {
+            console.log(error)
         }
     }
 
