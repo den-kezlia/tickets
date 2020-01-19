@@ -18,6 +18,7 @@ export default class Theater extends Component {
             showForm: false,
             showMaxToBookNotification: false,
             showSuccessFormMessage: false,
+            showErrorFormMessage: false,
             maxSeatsToBook: CST.MAX_SEATS_TO_BOOK,
             timer: 0,
 
@@ -175,7 +176,8 @@ export default class Theater extends Component {
     handleCloseBookingForm() {
         this.setState({
             showForm: false,
-            showSuccessFormMessage: false
+            showSuccessFormMessage: false,
+            showErrorFormMessage: false
         })
     }
 
@@ -222,13 +224,15 @@ export default class Theater extends Component {
         try {
             if (data.status === 'error') {
                 this.clearTimer()
-                alert('seat was sold', data.soldSeats)
-                //this.setState({showSuccessFormMessage: true})
+                this.setState({error: data})
+                this.setState({showErrorFormMessage: true})
             } else {
                 this.resetBookedSeats()
                 this.clearTimer()
                 this.setState({showSuccessFormMessage: true})
             }
+
+            this.getSeats()
         } catch(error) {
             console.log(error)
         }
@@ -274,6 +278,8 @@ export default class Theater extends Component {
                         bookedSeats={this.state.bookedSeats}
                         totalPrice={this.state.totalPrice}
                         showSuccessFormMessage={this.state.showSuccessFormMessage}
+                        showErrorFormMessage={this.state.showErrorFormMessage}
+                        error={this.state.error}
                         timer={this.state.timer}
                         form={this.state.form}
                         handleFieldChange={(e) => {this.handleFieldChange(e)}}

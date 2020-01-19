@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import PhoneInput from 'react-phone-input-2'
 
 import Timer from './Timer'
+import SuccessFormMessage from './SuccessFormMessage'
+import ErrorFormMessage from './ErrorFormMessage'
 
 export default class BookingForm extends Component {
     render() {
@@ -16,11 +18,15 @@ export default class BookingForm extends Component {
                     </div>
 
                     <div className="modal-content booking-content">
-                        {this.props.showSuccessFormMessage ? (
-                            <div>
-                                Спасибо, мы свяжемся с вами в ближайшее время для подтверждения.
-                            </div>
-                        ) : (
+                        {this.props.showSuccessFormMessage &&
+                            <SuccessFormMessage />
+                        }
+
+                        {this.props.showErrorFormMessage &&
+                            <ErrorFormMessage error={this.props.error} />
+                        }
+
+                        {(!this.props.showSuccessFormMessage && !this.props.showErrorFormMessage) &&
                             <form onSubmit={(e) => {this.props.handleBooking(e)}}>
                                 <Timer timer={this.props.timer} />
 
@@ -49,7 +55,7 @@ export default class BookingForm extends Component {
                                     <button className="btn btn-primary" type="submit">Забронировать</button>
                                 </div>
                             </form>
-                        )}
+                        }
                     </div>
                 </div>
             </div>
