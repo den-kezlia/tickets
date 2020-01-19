@@ -72,7 +72,13 @@ app.prepare().then(() => {
             let seats = {};
 
             seatsSnapshot.forEach((doc) => {
-                seats[doc.id] = doc.data()
+                const data = doc.data()
+
+                seats[doc.id] = {
+                    id: data.id,
+                    status: data.status,
+                    price: data.price
+                }
             });
 
             res.json({seats: seats})
