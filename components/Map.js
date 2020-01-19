@@ -1,6 +1,24 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import dynamic from 'next/dynamic'
+
+const DynamicComponentWithNoSSR = dynamic(
+    (Panzoom) => import('@panzoom/panzoom'),
+    { ssr: false }
+)
 
 export default class Map extends Component {
+    componentDidMount() {
+        if (process.browser) {
+
+            const elem = document.getElementById('map-wrapper')
+            const panzoom = Panzoom(elem, {
+                maxScale: 5
+            })
+            panzoom.pan(10, 10)
+            panzoom.zoom(2, { animate: true })
+        }
+    }
+
     render() {
         return (
             <div className="map-wrapper" id="map-wrapper">
