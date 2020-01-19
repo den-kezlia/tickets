@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import fetch from 'isomorphic-unfetch';
+import dynamic from 'next/dynamic'
 import CST from '../config/CST'
 
-import Map from './Map'
+//import Map from './Map'
 import Statusbar from './Statusbar'
 import BookingForm from './BookingForm'
 import MaxToBookNotification from './MaxToBookNotification'
+
+const Map = dynamic(import('./Map'), { ssr: false })
 
 export default class Theater extends Component {
     constructor(props) {

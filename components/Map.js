@@ -1,28 +1,44 @@
 import React, { Component } from 'react'
-import dynamic from 'next/dynamic'
-
-const DynamicComponentWithNoSSR = dynamic(
-    (Panzoom) => import('@panzoom/panzoom'),
-    { ssr: false }
-)
+import Panzoom from '@panzoom/panzoom'
+import CST from '../config/CST'
 
 export default class Map extends Component {
-    componentDidMount() {
-        if (process.browser) {
+    constructor(props) {
+        super(props)
 
-            const elem = document.getElementById('map-wrapper')
-            const panzoom = Panzoom(elem, {
-                maxScale: 5
-            })
-            panzoom.pan(10, 10)
-            panzoom.zoom(2, { animate: true })
-        }
+        this.state = {}
+    }
+
+    componentDidMount() {
+        const elem = document.getElementById('map')
+        const panzoom = Panzoom(elem, CST.PANZOOM)
+
+        this.setState({panzoom: panzoom})
+    }
+
+    handleZoomIn() {
+        const panzoom = this.state.panzoom
+        panzoom.zoomIn()
+
+        this.setState({panzoom: panzoom})
+    }
+
+    handleZoomOut() {
+        const panzoom = this.state.panzoom
+        panzoom.zoomOut()
+
+        this.setState({panzoom: panzoom})
     }
 
     render() {
         return (
             <div className="map-wrapper" id="map-wrapper">
-                <svg viewBox="0 0 1519 1384">
+                <div className="zoom">
+                    <button onClick={() => this.handleZoomIn()}>+</button>
+                    <button onClick={() => this.handleZoomOut()}>-</button>
+                </div>
+
+                <svg id="map" viewBox="0 0 1519 1384">
                     <g id="seats_bg" className="seats_bg" transform="translate(26.000000, 277.000000)">
                         <path d="M105.9,611.2 L39.7,641.5 C36.6,642.9 32.8,641.4 31.6,638.2 C14.6,595.3 5.5,556.9 0.4,527.7 C-2.84772206e-14,525.3 1,522.9 3.1,521.6 C17.5,512.5 31.9,503.3 46.3,494.2 C49.4,492.2 53.6,493.5 55.1,496.9 C58.5,504.8 62.7,514.3 67.7,525 C73.1,536.6 86.1,564.3 103.7,594.3 C104.9,596.3 106.5,599.1 108.6,602.5 C110.5,605.6 109.2,609.7 105.9,611.2 Z"></path>
                         <path d="M192.5,722.9 L128.9,788 C126.4,790.6 122.2,790.4 119.9,787.6 C97.2,760.1 73.2,725.9 51.6,683 C47,673.9 42.8,664.9 39,656 C37.7,653 39,649.5 42,648.1 L111.1,616.5 C113.8,615.3 117,616.2 118.7,618.7 C129.9,635.9 146.3,659.6 167.6,685.7 C176,695.9 184.3,705.6 192.6,714.7 C194.8,717 194.7,720.6 192.5,722.9 Z"></path>

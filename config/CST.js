@@ -6,5 +6,11 @@ module.exports = {
         FREE: 'free',
         SOLD: 'sold',
         HOLD: 'hold'
+    },
+    PANZOOM: {
+        maxScale: 10,
+        excludeClass: 'seat',
+        contain: 'outside',
+        animate: true
     }
 }
