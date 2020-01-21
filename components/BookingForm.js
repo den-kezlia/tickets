@@ -3,7 +3,7 @@ import PhoneInput from 'react-phone-input-2'
 
 import Timer from './Timer'
 import SuccessFormMessage from './SuccessFormMessage'
-import ErrorFormMessage from './ErrorFormMessage'
+import ErrorFormMessage from './Errors/ErrorFormMessage'
 
 export default class BookingForm extends Component {
     render() {

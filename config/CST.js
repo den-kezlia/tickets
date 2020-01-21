@@ -12,5 +12,10 @@ module.exports = {
         excludeClass: 'seat',
         contain: 'outside',
         animate: true
+    },
+    ERROR: {
+        ERROR: 'error',
+        TO_MANY_TICKETS: 'toManyTickets',
+        SOLD_SEATS: 'soldSeats'
     }
 }

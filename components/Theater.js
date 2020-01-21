@@ -225,7 +225,7 @@ export default class Theater extends Component {
         const data = await response.json();
 
         try {
-            if (data.status === 'error') {
+            if (data.status === CST.ERROR.ERROR) {
                 this.clearTimer()
                 this.setState({error: data})
                 this.setState({showErrorFormMessage: true})

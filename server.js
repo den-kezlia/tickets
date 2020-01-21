@@ -87,10 +87,9 @@ app.prepare().then(() => {
     })
 
     server.post('/api/bookSeats', (req, res, next) => {
-        let errors = false;
-
         db.collection('seats').get()
         .then(seatsSnapshot => {
+            let errors = false;
             let seats = {};
             let soldSeats = [];
 
@@ -100,7 +99,15 @@ app.prepare().then(() => {
 
             if (Object.entries(seats).length && req.body.bookedSeats.length) {
                 let areSeatsFree = true;
+                let errors = {
+                    status: CST.ERROR.ERROR,
+                    type: CST.ERROR.TO_MANY_TICKETS
+                };
                 const bookedSeats = req.body.bookedSeats;
+
+                if (bookedSeats.length > CST.MAX_SEATS_TO_BOOK) {
+                    errors = {}
+                }
 
                 bookedSeats.forEach(item => {
                     if (seats[item.id].status !== CST.STATUS.FREE) {
@@ -143,7 +150,8 @@ app.prepare().then(() => {
                     })
                 } else {
                     errors = {
-                        status: 'error',
+                        status: CST.ERROR.ERROR,
+                        type: CST.ERROR.SOLD_SEATS,
                         soldSeats: soldSeats
                     }
 

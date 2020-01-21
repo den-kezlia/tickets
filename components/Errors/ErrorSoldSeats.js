@@ -10,7 +10,7 @@ export default class ErrorFormMessage extends Component {
                 <div>
                     Кем-то купленные места:
                     <ul>
-                        {this.props.error.soldSeats.map(seat => {
+                        {this.props.soldSeats.map(seat => {
                             return (<li key={'sold-seat-' + seat}>{seat}</li>)
                         })}
                     </ul>
