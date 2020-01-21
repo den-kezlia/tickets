@@ -98,17 +98,16 @@ app.prepare().then(() => {
             });
 
             if (Object.entries(seats).length && req.body.bookedSeats.length) {
-                let areSeatsFree = true;
-                let errors = {
-                    status: CST.ERROR.ERROR,
-                    type: CST.ERROR.TO_MANY_TICKETS
-                };
                 const bookedSeats = req.body.bookedSeats;
 
                 if (bookedSeats.length > CST.MAX_SEATS_TO_BOOK) {
-                    errors = {}
+                    errors = {
+                        status: CST.ERROR.ERROR,
+                        type: CST.ERROR.TO_MANY_TICKETS
+                    }
                 }
 
+                let areSeatsFree = true;
                 bookedSeats.forEach(item => {
                     if (seats[item.id].status !== CST.STATUS.FREE) {
                         areSeatsFree = false
@@ -116,16 +115,24 @@ app.prepare().then(() => {
                     }
                 })
 
-                if (areSeatsFree) {
+                if (!areSeatsFree) {
+                    errors = {
+                        status: CST.ERROR.ERROR,
+                        type: CST.ERROR.SOLD_SEATS,
+                        soldSeats: soldSeats
+                    }
+                }
+
+                if (!errors) {
                     bookedSeats.forEach(item => {
                         let seat = db.collection('seats').doc(item.id)
                         seat.update({
                             status: CST.STATUS.HOLD,
-                            soldTo: req.body.form.phone
+                            soldTo: req.body.form.phone.value
                         })
                     })
 
-                    let user = db.collection('users').doc(req.body.form.phone)
+                    let user = db.collection('users').doc(req.body.form.phone.value)
                     user.get().then(doc => {
                         let userOrderedSeats = [];
 
@@ -138,9 +145,9 @@ app.prepare().then(() => {
                         userOrderedSeats = userOrderedSeats.concat(bookedSeats.map(item => {return item.id}))
 
                         user.set({
-                            email: req.body.form.email,
-                            name: req.body.form.name,
-                            phone: req.body.form.phone,
+                            email: req.body.form.email.value,
+                            name: req.body.form.name.value,
+                            phone: req.body.form.phone.value,
                             orderedSeats: userOrderedSeats
                         }, {merge: true})
 
@@ -149,12 +156,6 @@ app.prepare().then(() => {
                         })
                     })
                 } else {
-                    errors = {
-                        status: CST.ERROR.ERROR,
-                        type: CST.ERROR.SOLD_SEATS,
-                        soldSeats: soldSeats
-                    }
-
                     res.json(errors)
                 }
             }

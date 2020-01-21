@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-export default class ErrorFormMessage extends Component {
+export default class ErrorSoldSeats extends Component {
     render() {
         return (
             <div>

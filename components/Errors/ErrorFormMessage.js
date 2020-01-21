@@ -8,7 +8,7 @@ export default class ErrorFormMessage extends Component {
         return (
             <div>
                 {this.props.error.type === CST.ERROR.SOLD_SEATS && (
-                    <ErrorSoldSeats soldSeats={this.props.error.props.soldSeats} />
+                    <ErrorSoldSeats soldSeats={this.props.error.soldSeats} />
                 )}
 
                 {this.props.error.type === CST.ERROR.TO_MANY_TICKETS && (

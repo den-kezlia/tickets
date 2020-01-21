@@ -20,16 +20,8 @@ export default class Theater extends Component {
 
             showForm: false,
             showMaxToBookNotification: false,
-            showSuccessFormMessage: false,
-            showErrorFormMessage: false,
             maxSeatsToBook: CST.MAX_SEATS_TO_BOOK,
             timer: 0,
-
-            form: {
-                name: '',
-                email: '',
-                phone: ''
-            }
         }
     }
 
@@ -116,16 +108,8 @@ export default class Theater extends Component {
             seats: seats,
             bookedSeats: bookedSeats,
             totalPrice: totalPrice,
-            timer: 0,
             showForm: hideBookingForm
         })
-    }
-
-    clearTimer() {
-        clearInterval(this.interval)
-        clearTimeout(this.timer)
-        this.setState({timer: 0})
-        this.timer = null
     }
 
     handleBookSeat(item) {
@@ -148,115 +132,28 @@ export default class Theater extends Component {
         const item = document.getElementById(id)
         const itemStatus = CST.STATUS.FREE
 
-        if (this.state.bookedSeats.length === 1) {
-            this.clearTimer()
-        }
-
         this.updateSeatStatus(item, itemStatus)
     }
 
     handleOpenBookingForm() {
-        if (!this.timer) {
-            this.setState({
-                timer: CST.TIMER
-            })
-
-            this.interval = setInterval(() => {
-                var timer = this.state.timer
-                this.setState({timer: timer - 1})
-            }, 1000)
-
-            this.timer = setTimeout(() => {
-                this.resetBookedSeats(false)
-                this.clearTimer()
-                console.log('timeout')
-            }, CST.TIMER * 1000)
-        }
-
         this.setState({showForm: true})
-    }
-
-    handleCloseBookingForm() {
-        this.setState({
-            showForm: false,
-            showSuccessFormMessage: false,
-            showErrorFormMessage: false
-        })
-    }
-
-    handleBooking(e) {
-        e.preventDefault()
-        const form = this.state.form
-        const bookedSeats = this.state.bookedSeats
-        let fieldsError = false;
-
-        if (!form.name.length) {
-            form.nameError = 'Поле обязательно для заполнения';
-            fieldsError = true
-        } else {
-            form.nameError = ''
-        }
-
-        if (!form.email.length) {
-            form.emailError = 'Поле обязательно для заполнения';
-            fieldsError = true
-        } else {
-            form.emailError = ''
-        }
-
-        if (!form.phone.length) {
-            form.phoneError = 'Поле обязательно для заполнения';
-            fieldsError = true
-        } else {
-            form.phoneError = ''
-        }
-
-        if (!fieldsError) {
-            this.bookSeats(form, bookedSeats)
-        }
-    }
-
-    bookSeats = async function (form, bookedSeats) {
-        const response = await fetch('/api/bookSeats', {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({form, bookedSeats})
-        });
-        const data = await response.json();
-
-        try {
-            if (data.status === CST.ERROR.ERROR) {
-                this.clearTimer()
-                this.setState({error: data})
-                this.setState({showErrorFormMessage: true})
-            } else {
-                this.resetBookedSeats()
-                this.clearTimer()
-                this.setState({showSuccessFormMessage: true})
-            }
-
-            this.getSeats()
-        } catch(error) {
-            console.log(error)
-        }
     }
 
     handleCloseMaxToBookNotification() {
         this.setState({showMaxToBookNotification: false})
     }
 
-    handleFieldChange(e) {
-        const form = this.state.form
+    handleCloseBookingForm() {
+        this.setState({
+            showForm: false
+        })
+    }
 
-        if (e.target !== undefined) {
-            form[e.target.name] = e.target.value
-            form[e.target.name + 'Error'] = e.target.value ? '' : 'Поле обязательно для заполнения'
-        } else {
-            form.phone = e;
-            form.phoneError = e ? '' : 'Поле обязательно для заполнения'
+    handleBooking(status) {
+        if (status) {
+            this.resetBookedSeats()
         }
-
-        this.setState({form: form})
+        this.getSeats()
     }
 
     render() {
@@ -270,7 +167,6 @@ export default class Theater extends Component {
                     <Statusbar
                         bookedSeats={this.state.bookedSeats}
                         totalPrice={this.state.totalPrice}
-                        timer={this.state.timer}
                         handleUnBookSeat={(id) => {this.handleUnBookSeat(id)}}
                         handleOpenForm={() => {this.handleOpenBookingForm()}}
                     />
@@ -280,14 +176,8 @@ export default class Theater extends Component {
                     <BookingForm
                         bookedSeats={this.state.bookedSeats}
                         totalPrice={this.state.totalPrice}
-                        showSuccessFormMessage={this.state.showSuccessFormMessage}
-                        showErrorFormMessage={this.state.showErrorFormMessage}
-                        error={this.state.error}
-                        timer={this.state.timer}
-                        form={this.state.form}
-                        handleFieldChange={(e) => {this.handleFieldChange(e)}}
-                        handleBooking={(e) => {this.handleBooking(e)}}
-                        handleCloseBookingForm={() => {this.handleCloseBookingForm()}}
+                        handleCloseBookingForm={() => this.handleCloseBookingForm()}
+                        handleBooking={(status) => this.handleBooking(status)}
                     />
                 }
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import CST from '../../config/CST'
 
-export default class ErrorFormMessage extends Component {
+export default class ErrorToManyTickets extends Component {
     render() {
         return (
             <div>

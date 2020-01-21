@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Timer from './Timer'
 
 export default class Statusbar extends Component {
     render() {
@@ -34,8 +33,6 @@ export default class Statusbar extends Component {
                     }
 
                     <div className="btn-wrapper">
-                        <Timer timer={this.props.timer} />
-
                         {this.props.bookedSeats.length > 0 &&
                             <button className="btn" onClick={() => {this.props.handleOpenForm()}}>Продолжить</button>
                         }
