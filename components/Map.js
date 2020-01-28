@@ -3102,7 +3102,7 @@ export default class Map extends Component {
                                 <tspan x="2.7" y="13.2">20</tspan>
                             </text>
                         </g>
-                        <g className="seat" onClick={(e) => this.props.onClick(e.currentTarget)} id="p\-11-19" transform="translate(775.100000, 267.100000)">
+                        <g className="seat" onClick={(e) => this.props.onClick(e.currentTarget)} id="p-11-19" transform="translate(775.100000, 267.100000)">
                             <circle className="seat_cycle" id="pc-11-19" cx="9" cy="9" r="9"></circle>
                             <text className="seat_text" id="pn-11-19">
                                 <tspan x="1.4" y="13.2">19</tspan>
