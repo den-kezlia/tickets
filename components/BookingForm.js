@@ -105,7 +105,7 @@ export default class BookingForm extends Component {
     bookSeats = async function (form, bookedSeats) {
         const response = await fetch('/api/bookSeats', {
             method: 'POST',
-            headers: {"Content-Type": "application/json"},
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({form, bookedSeats})
         });
         const data = await response.json();
