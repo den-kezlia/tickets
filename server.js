@@ -166,6 +166,20 @@ app.prepare().then(() => {
         }))
     })
 
+    function checkAuth(req, res, next) {
+        if (req.session.decodedToken) {
+            next()
+        } else {
+            res.status(403).send('Unauthorized')
+        }
+    }
+
+    server.get('/api/getTeam', checkAuth, (req, res, next) => {
+        res.json({
+            team: ['team']
+        })
+    })
+
     server.get('*', (req, res) => {
         return handle(req, res)
     })

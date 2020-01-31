@@ -25,7 +25,6 @@ export default class Index extends Component {
 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState({ user: user })
         return user
           .getIdToken()
           .then(token => {
@@ -35,6 +34,9 @@ export default class Index extends Component {
               credentials: 'same-origin',
               body: JSON.stringify({ token }),
             })
+          })
+          .then(() => {
+            this.setState({ user: user })
           })
       } else {
         this.setState({ user: null })
