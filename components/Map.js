@@ -30,12 +30,20 @@ export default class Map extends Component {
         this.setState({panzoom: panzoom})
     }
 
+    handleZoomReset() {
+        const panzoom = this.state.panzoom
+        panzoom.reset()
+
+        this.setState({panzoom: panzoom})
+    }
+
     render() {
         return (
             <div className="map-wrapper" id="map-wrapper">
                 <div className="zoom">
                     <button onClick={() => this.handleZoomIn()}>+</button>
                     <button onClick={() => this.handleZoomOut()}>-</button>
+                    <button onClick={() => this.handleZoomReset()}>0</button>
                 </div>
 
                 <svg id="map" viewBox="0 0 1519 1384">

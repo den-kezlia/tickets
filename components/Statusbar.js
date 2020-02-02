@@ -9,11 +9,7 @@ export default class Statusbar extends Component {
                         <div className="booked-seats">
                             <div className="sidebar-header">
                                 <div className="sidebar-title">
-                                    Забронированные места:
-                                </div>
-                                <div className="tickets-count">
-                                    <span>{this.props.bookedSeats.length} мест</span>
-                                    <span>{this.props.totalPrice}грн</span>
+                                    Билеты:
                                 </div>
                             </div>
 
@@ -34,7 +30,10 @@ export default class Statusbar extends Component {
 
                     <div className="btn-wrapper">
                         {this.props.bookedSeats.length > 0 &&
-                            <button className="btn" onClick={() => {this.props.handleOpenForm()}}>Продолжить</button>
+                            <button className="btn btn_wide" onClick={() => {this.props.handleOpenForm()}}>
+                                <span className="btn-label__continue">Продолжить</span>
+                                <span className="btn-label__price">{this.props.totalPrice}грн</span>
+                            </button>
                         }
                     </div>
                 </div>

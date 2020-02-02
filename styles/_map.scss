@@ -35,6 +35,10 @@
         .seat_cycle {
             fill: $seatHold;
         }
+
+        .seat_text {
+            display: none;
+        }
     }
 
     &[data-status='booked'] {

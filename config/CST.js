@@ -8,8 +8,8 @@ module.exports = {
     },
     PANZOOM: {
         maxScale: 10,
-        excludeClass: 'seat',
-        contain: 'outside',
+        //excludeClass: 'seat',
+        //contain: 'outside',
         animate: true
     },
     ERROR: {
