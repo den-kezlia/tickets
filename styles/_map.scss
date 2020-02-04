@@ -1,5 +1,10 @@
 .map-wrapper {
     position: relative;
+
+    #map {
+        width: 1500px;
+        height: auto;
+    }
 }
 
 .zoom {
@@ -52,6 +57,7 @@
     .seat_cycle {
         fill: $seatFree;
         fill-rule: nonzero;
+        transition: fill ease-in 0.3s;
     }
 }
 

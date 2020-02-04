@@ -18,13 +18,12 @@ body {
     height: 100vh;
 
     .statusbar {
-        width: 330px;
-        margin-right: 20px;
+        width: 400px;
         order: 0;
     }
 
     .map-wrapper {
-        width: calc(100% - 330px);
+        width: calc(100% - 400px);
         order: 1;
     }
 }

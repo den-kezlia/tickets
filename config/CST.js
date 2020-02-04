@@ -1,5 +1,5 @@
 module.exports = {
-    MAX_SEATS_TO_BOOK: 2,
+    MAX_SEATS_TO_BOOK: 8,
     STATUS: {
         BOOKED: 'booked',
         FREE: 'free',
@@ -7,9 +7,9 @@ module.exports = {
         HOLD: 'hold'
     },
     PANZOOM: {
-        maxScale: 10,
+        maxScale: 2,
         //excludeClass: 'seat',
-        //contain: 'outside',
+        contain: 'outside',
         animate: true
     },
     ERROR: {

@@ -1,6 +1,7 @@
 .statusbar {
     padding: 10px;
     background: $statusBarBg;
+    overflow-y: auto;
 
     .statusbar-inner {
         display: flex;
@@ -8,6 +9,11 @@
         flex-direction: column;
         height: 100%;
     }
+}
+
+.booked-seats {
+    max-height: calc(100vh - 230px);
+    overflow-y: auto;
 }
 
 .tickets-count {
