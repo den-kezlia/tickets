@@ -34,7 +34,6 @@ export default function Title() {
                 .title__main,
                 .title__sub {
                     margin: 8px 0;
-                    font-family: serif;
                     color: #704652;
                     text-align: center;
                 }

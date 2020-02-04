@@ -28,10 +28,22 @@
     .booked-seat {
         display: flex;
         justify-content: space-between;
-        padding: 20px 10px;
+        align-items: center;
+        padding: 15px 10px 15px 20px;
         margin: 10px 0;
+        border-radius: 10px;
         list-style: none;
         background: white;
         border: $bookedSeatBorder;
+
+        button {
+            display: block;
+            background: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            line-height: 30px;
+        }
     }
 }
