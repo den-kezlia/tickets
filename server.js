@@ -1,43 +1,20 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const session = require('express-session')
-const FileStore = require('session-file-store')(session)
 const next = require('next')
-const admin = require('firebase-admin')
+const MongoClient = require('mongodb').MongoClient;
 
 const CST = require('./config/CST')
+const mongoConfig = require('./config/mongo')
+const DBHelper = require('./server/DBHelper')
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({dev})
 const handle = app.getRequestHandler()
 
-const firebaseAuth = admin.initializeApp({
-    credential: admin.credential.cert(require('./config/server.json'))
-})
-
-let db = admin.firestore();
-
 app.prepare().then(() => {
     const server = express()
-
     server.use(bodyParser.json())
-    server.use(
-        session({
-            secret: 'MYSECRET',
-            saveUninitialized: true,
-            store: new FileStore({ secret: 'MYSECRET' }),
-            resave: false,
-            rolling: true,
-            httpOnly: true,
-            cookie: { maxAge: 604800000 }, // week
-        })
-    )
-
-    server.use((req, res, next) => {
-        req.firebaseServer = firebaseAuth
-        next()
-    })
 
     server.post('/api/login', (req, res) => {
         if (!req.body) return res.sendStatus(400)
@@ -67,103 +44,119 @@ app.prepare().then(() => {
     })
 
     server.get('/api/getSeats', (req, res, next) => {
-        db.collection('seats').get()
-        .then(seatsSnapshot => {
-            let seats = {};
+        MongoClient.connect(mongoConfig.URL, (err, client) => {
+            const db = client.db(mongoConfig.DB);
 
-            seatsSnapshot.forEach((doc) => {
-                const data = doc.data()
+            DBHelper.getAllSeats(db, results => {
+                client.close();
+                let seats = {};
 
-                seats[doc.id] = {
-                    id: data.id,
-                    status: data.status,
-                    price: data.price
-                }
+                results.forEach((item) => {
+                    seats[item._id] = {
+                        _id: item._id,
+                        id: item.id,
+                        status: item.status,
+                        price: item.price
+                    }
+                });
+
+                res.json({
+                    status: 'success',
+                    seats: seats
+                })
             });
-
-            res.json({seats: seats})
-        })
-        .catch(error => {console.log('Error ', error)})
+        });
     })
 
     server.post('/api/bookSeats', (req, res, next) => {
-        db.collection('seats').get()
-        .then(seatsSnapshot => {
+        MongoClient.connect(mongoConfig.URL, (err, client) => {
+            const db = client.db(mongoConfig.DB);
             let errors = false;
-            let seats = {};
             let soldSeats = [];
 
-            seatsSnapshot.forEach((doc) => {
-                seats[doc.id] = doc.data()
-            });
+            DBHelper.getAllSeats(db, seats => {
+                if (seats.length && req.body.bookedSeats.length) {
+                    const bookedSeats = req.body.bookedSeats;
 
-            if (Object.entries(seats).length && req.body.bookedSeats.length) {
-                const bookedSeats = req.body.bookedSeats;
-
-                if (bookedSeats.length > CST.MAX_SEATS_TO_BOOK) {
-                    errors = {
-                        status: CST.ERROR.ERROR,
-                        type: CST.ERROR.TO_MANY_TICKETS
-                    }
-                }
-
-                let areSeatsFree = true;
-                bookedSeats.forEach(item => {
-                    if (seats[item.id].status !== CST.STATUS.FREE) {
-                        areSeatsFree = false
-                        soldSeats.push(seats[item.id].id)
-                    }
-                })
-
-                if (!areSeatsFree) {
-                    errors = {
-                        status: CST.ERROR.ERROR,
-                        type: CST.ERROR.SOLD_SEATS,
-                        soldSeats: soldSeats
-                    }
-                }
-
-                if (!errors) {
-                    bookedSeats.forEach(item => {
-                        let seat = db.collection('seats').doc(item.id)
-                        seat.update({
-                            status: CST.STATUS.HOLD,
-                            soldTo: req.body.form.phone.value
-                        })
-                    })
-
-                    let user = db.collection('users').doc(req.body.form.phone.value)
-                    user.get().then(doc => {
-                        let userOrderedSeats = [];
-
-                        if (!doc.exists) {
-                            console.log('No such document!');
-                        } else {
-                            userOrderedSeats = doc.data().orderedSeats;
+                    if (bookedSeats.length > CST.MAX_SEATS_TO_BOOK) {
+                        errors = {
+                            status: CST.ERROR.ERROR,
+                            type: CST.ERROR.TO_MANY_TICKETS
                         }
+                    }
 
-                        userOrderedSeats = userOrderedSeats.concat(bookedSeats.map(item => {return item.id}))
-
-                        user.set({
-                            email: req.body.form.email.value,
-                            name: req.body.form.name.value,
-                            phone: req.body.form.phone.value,
-                            orderedSeats: userOrderedSeats
-                        }, {merge: true})
-
-                        res.json({
-                            status: true
+                    let areSeatsSold = false;
+                    bookedSeats.forEach(bookedSeat => {
+                        const sold = seats.filter(seat => {
+                            return seat.id === bookedSeat.id && seat.status !== CST.STATUS.FREE
                         })
+
+                        if (sold.length) {
+                            areSeatsSold = false;
+                            soldSeats.push(sold);
+                        }
                     })
+
+                    if (areSeatsSold) {
+                        errors = {
+                            status: CST.ERROR.ERROR,
+                            type: CST.ERROR.SOLD_SEATS,
+                            soldSeats: soldSeats
+                        }
+                    }
+
+                    if (!errors) {
+                        bookedSeats.forEach((bookedSeat, index) => {
+                            DBHelper.updateSeat(db, {
+                                id: bookedSeat.id,
+                                status: CST.STATUS.HOLD,
+                                soldTo: req.body.form.phone.value
+                            }, () => {
+                                if (bookedSeats.length - 1 === index) {
+                                    let userData = {
+                                        email: req.body.form.email.value,
+                                        name: req.body.form.name.value,
+                                        phone: req.body.form.phone.value,
+                                        orderedSeats: bookedSeats.map(seat => {return seat.id})
+                                    };
+
+                                    DBHelper.getUser(db, req.body.form.phone.value, user => {
+                                        if (user.length) {
+                                            userData.orderedSeats = userData.orderedSeats.concat(user[0].orderedSeats)
+
+                                            DBHelper.updateUser(db, userData, () => {
+                                                client.close()
+
+                                                res.json({
+                                                    status: true
+                                                })
+                                            })
+                                        } else {
+                                            DBHelper.addUser(db, userData, () => {
+                                                client.close()
+
+                                                res.json({
+                                                    status: true
+                                                })
+                                            });
+                                        }
+                                    })
+                                }
+                            })
+                        })
+                    } else {
+                        res.json(errors)
+                    }
                 } else {
+                    errors = {
+                        status: CST.ERROR.ERROR,
+                        type: CST.ERROR.DB_ERROR
+                    }
+
                     res.json(errors)
                 }
-            }
+            })
         })
-        .catch((err) => res.json({
-            error: 'DB error',
-            message: 'Error getting documents', err
-        }))
     })
 
     function checkAuth(req, res, next) {

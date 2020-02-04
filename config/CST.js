@@ -15,6 +15,7 @@ module.exports = {
     ERROR: {
         ERROR: 'error',
         TO_MANY_TICKETS: 'toManyTickets',
+        DB_ERROR: 'DBError',
         SOLD_SEATS: 'soldSeats'
     }
 }

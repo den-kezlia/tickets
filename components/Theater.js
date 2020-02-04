@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import fetch from 'isomorphic-unfetch';
 import dynamic from 'next/dynamic'
 import CST from '../config/CST'
+import utils from '../utils/utils'
 
-//import Map from './Map'
 import Statusbar from './Statusbar'
 import BookingForm from './BookingForm'
 import MaxToBookNotification from './MaxToBookNotification'
@@ -48,16 +48,15 @@ export default class Theater extends Component {
 
     generateState() {
         const bookedSeats = []
+        const seats = this.state.seats
         let totalPrice = 0
 
-        for (let id in this.state.seats) {
-            const element = this.state.seats[id]
-            const seat = document.getElementById(element.id)
-            seat.setAttribute('data-status', element.status)
+        for (let id in seats) {
+            const seat = seats[id]
 
-            if (element.status === CST.STATUS.BOOKED) {
-                bookedSeats.push(element)
-                totalPrice = totalPrice + element.price
+            if (seat.status === CST.STATUS.BOOKED) {
+                bookedSeats.push(seat)
+                totalPrice = totalPrice + seat.price
             }
         }
 
@@ -67,20 +66,22 @@ export default class Theater extends Component {
         })
     }
 
-    updateSeatStatus(item, itemStatus) {
+    updateSeatStatus(id, status) {
         const seats = this.state.seats
         let bookedSeats = this.state.bookedSeats
         let totalPrice = this.state.totalPrice
 
-        seats[item.id].status = itemStatus
-        if (itemStatus === CST.STATUS.BOOKED) {
-            bookedSeats.push(seats[item.id])
-            totalPrice = totalPrice + seats[item.id].price
+        const seat = utils.filterSeat(seats, id)
+        seats[seat._id].status = status
+
+        if (status === CST.STATUS.BOOKED) {
+            bookedSeats.push(seats[seat._id])
+            totalPrice = totalPrice + seats[seat._id].price
         } else {
             bookedSeats = bookedSeats.filter((i) => {
-                return i.id !== item.id
+                return i.id !== id
             })
-            totalPrice = totalPrice - seats[item.id].price
+            totalPrice = totalPrice - seats[seat._id].price
         }
 
         this.setState({
@@ -88,8 +89,6 @@ export default class Theater extends Component {
             bookedSeats: bookedSeats,
             totalPrice: totalPrice
         })
-
-        item.setAttribute('data-status', itemStatus)
     }
 
     resetBookedSeats(hideBookingForm = true) {
@@ -98,8 +97,7 @@ export default class Theater extends Component {
         const totalPrice = 0
 
         bookedSeats.forEach((book) => {
-            seats[book.id].status = CST.STATUS.FREE
-            document.getElementById(book.id).setAttribute('data-status', CST.STATUS.FREE)
+            seats[book._id].status = CST.STATUS.FREE
         })
 
         bookedSeats = []
@@ -113,16 +111,16 @@ export default class Theater extends Component {
     }
 
     handleBookSeat(item) {
-        let itemStatus = item.getAttribute('data-status')
+        let status = item.getAttribute('data-status')
 
-        if (itemStatus === CST.STATUS.SOLD || itemStatus === CST.STATUS.HOLD) {
+        if (status === CST.STATUS.SOLD || status === CST.STATUS.HOLD) {
             return
         }
 
-        itemStatus = itemStatus === CST.STATUS.FREE ? CST.STATUS.BOOKED : CST.STATUS.FREE
+        status = status === CST.STATUS.FREE ? CST.STATUS.BOOKED : CST.STATUS.FREE
 
-        if (this.state.bookedSeats.length < this.state.maxSeatsToBook || itemStatus === CST.STATUS.FREE) {
-            this.updateSeatStatus(item, itemStatus)
+        if (this.state.bookedSeats.length < this.state.maxSeatsToBook || status === CST.STATUS.FREE) {
+            this.updateSeatStatus(item.id, status)
         } else {
             this.setState({showMaxToBookNotification: true})
         }
@@ -130,9 +128,9 @@ export default class Theater extends Component {
 
     handleUnBookSeat(id) {
         const item = document.getElementById(id)
-        const itemStatus = CST.STATUS.FREE
+        const status = CST.STATUS.FREE
 
-        this.updateSeatStatus(item, itemStatus)
+        this.updateSeatStatus(item.id, status)
     }
 
     handleOpenBookingForm() {
@@ -161,6 +159,7 @@ export default class Theater extends Component {
             <div>
                 <div className="wrapper">
                     <Map
+                        seats={this.state.seats}
                         onClick={(item) => this.handleBookSeat(item)}
                     />
 

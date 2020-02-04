@@ -6,7 +6,9 @@ export default class Map extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {}
+        this.state = {
+            seats: this.props.seats
+        }
     }
 
     componentDidMount() {
@@ -14,6 +16,36 @@ export default class Map extends Component {
         const panzoom = Panzoom(elem, CST.PANZOOM)
 
         this.setState({panzoom: panzoom})
+
+        this.setDOMSeats()
+    }
+
+    componentDidUpdate() {
+        this.updateDOMSeats()
+    }
+
+    updateDOMSeats () {
+        const seats = this.props.seats
+
+        if (this.props.seats) {
+            for (let id in seats) {
+                const seatDOM = document.getElementById(seats[id].id)
+                if (seatDOM.getAttribute('data-status') !== seats[id].status) {
+                    seatDOM.setAttribute('data-status', seats[id].status)
+                }
+            }
+        }
+    }
+
+    setDOMSeats () {
+        const seats = this.props.seats
+
+        if (this.props.seats) {
+            for (let id in seats) {
+                const seatDOM = document.getElementById(seats[id].id)
+                seatDOM.setAttribute('data-status', seats[id].status)
+            }
+        }
     }
 
     handleZoomIn() {

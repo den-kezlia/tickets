@@ -23,17 +23,12 @@
 .seat {
     cursor: pointer;
 
-    &[data-status='sold'] {
+    &[data-status='sold'],
+    &[data-status='hold'] {
         cursor: initial;
 
         .seat_cycle {
             fill: $seatSold;
-        }
-    }
-
-    &[data-status='hold'] {
-        .seat_cycle {
-            fill: $seatHold;
         }
 
         .seat_text {
