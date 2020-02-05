@@ -84,7 +84,7 @@ export default class Header extends Component {
                         width: 30px;
                         height: 30px;
                         background: white;
-                        border: 1px solid;
+                        border: 1px solid #704652;
                         border-radius: 50%;
                         padding: 0;
                         left: 50%;

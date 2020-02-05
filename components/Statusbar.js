@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Header from './Statusbar/Header'
+import utils from '../utils/utils'
 
 export default class Statusbar extends Component {
     render() {
@@ -19,12 +20,18 @@ export default class Statusbar extends Component {
 
                                 <ul className="booked-list">
                                     {this.props.bookedSeats.map((item) => {
+                                        const name = utils.covertPlaceName(item.id)
                                         return (
                                             <li className="booked-seat" key={'booked-' + item.id}>
-                                                <span>
-                                                    {item.id} - {item.price}грн
+                                                <span className="booked-seat__name">
+                                                    {name}
                                                 </span>
-                                                <button onClick={() => {this.props.handleUnBookSeat(item.id)}}>X</button>
+                                                <div>
+                                                    <span className="booked-seat__price">
+                                                        {item.price}грн
+                                                    </span>
+                                                    <button className="booked-seat__remove" onClick={() => {this.props.handleUnBookSeat(item.id)}}>X</button>
+                                                </div>
                                             </li>
                                         )
                                     })}

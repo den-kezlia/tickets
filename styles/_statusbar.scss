@@ -36,8 +36,17 @@
         background: white;
         border: $bookedSeatBorder;
 
-        button {
-            display: block;
+        .booked-seat__name {
+
+        }
+
+        .booked-seat__price {
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .booked-seat__remove {
+            display: inline-block;
             background: none;
             padding: 0;
             width: 30px;
