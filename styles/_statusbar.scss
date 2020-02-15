@@ -1,13 +1,24 @@
 .statusbar {
     padding: 10px;
     background: $statusBarBg;
-    overflow-y: auto;
+
+    @media (max-width: 1023px) {
+        height: 40vh;
+        position: fixed;
+        bottom: 0;
+    }
+
+    @media (min-width: 1024px) {
+        overflow-y: auto;
+    }
 
     .statusbar-inner {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        height: 100%;
+        @media (min-width: 1024px) {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            height: 100%;
+        }
     }
 }
 
@@ -31,7 +42,7 @@
         align-items: center;
         padding: 15px 10px 15px 20px;
         margin: 10px 0;
-        border-radius: 10px;
+        border-radius: 3px;
         list-style: none;
         background: white;
         border: $bookedSeatBorder;

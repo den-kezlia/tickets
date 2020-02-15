@@ -33,6 +33,7 @@ export default function Title() {
 
                 .title__main,
                 .title__sub {
+                    font-weight: 100;
                     margin: 8px 0;
                     color: #704652;
                     text-align: center;
