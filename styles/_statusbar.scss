@@ -2,18 +2,18 @@
     padding: 10px;
     background: $statusBarBg;
 
-    @media (max-width: 1023px) {
+    @include media-breakpoint-down(sm) {
         height: 40vh;
         position: fixed;
         bottom: 0;
     }
 
-    @media (min-width: 1024px) {
+    @include media-breakpoint-up(md) {
         overflow-y: auto;
     }
 
     .statusbar-inner {
-        @media (min-width: 1024px) {
+        @include media-breakpoint-up(md) {
             display: flex;
             justify-content: space-between;
             flex-direction: column;

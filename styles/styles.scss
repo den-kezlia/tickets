@@ -1,5 +1,6 @@
 @import 'normilize';
 @import 'variables';
+@import 'mixins';
 @import 'map';
 @import 'statusbar';
 @import 'modal';
@@ -15,20 +16,20 @@ body {
 }
 
 .wrapper {
-    @media (min-width: 1024px) {
+    @include media-breakpoint-up(md) {
         display: flex;
         height: 100vh;
     }
 
     .statusbar {
-        @media (min-width: 1024px) {
+        @include media-breakpoint-up(md) {
             width: 400px;
             order: 0;
         }
     }
 
     .map-wrapper {
-        @media (min-width: 1024px) {
+        @include media-breakpoint-up(md) {
             width: calc(100% - 400px);
             order: 1;
         }

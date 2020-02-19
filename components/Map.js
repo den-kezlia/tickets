@@ -68,9 +68,9 @@ export default class Map extends Component {
         return (
             <div className="map-wrapper" id="map-wrapper">
                 <div className="zoom">
-                    <button onClick={() => this.handleZoomIn()}>+</button>
-                    <button onClick={() => this.handleZoomOut()}>-</button>
-                    <button onClick={() => this.handleZoomReset()}>0</button>
+                    <button onClick={() => this.handleZoomIn()}> + </button>
+                    <button onClick={() => this.handleZoomOut()}> - </button>
+                    <button onClick={() => this.handleZoomReset()} > = </button>
                 </div>
 
                 <svg id="map" viewBox="0 0 1519 1384">
